@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
 
 namespace ProcGen
@@ -9,11 +10,12 @@ namespace ProcGen
 		[SerializeField] private AssetsCollection _assets;
 		[SerializeField] private Transform _parent;
 		[SerializeField] private MinMaxAABB _boundingVolume = new(-1f, 1f);
+		[SerializeField] private float2 minRoomSize, maxRoomSize;
 
 		[ContextMenu("Generate")]
 		public void Generate()
 		{
-			Generator.Generate(new(_assets, _boundingVolume));
+			Generator.Generate(new(_assets, _boundingVolume, minRoomSize, maxRoomSize));
 		}
 
 		private void OnDrawGizmosSelected()
