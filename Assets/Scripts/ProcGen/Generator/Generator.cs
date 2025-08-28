@@ -1,6 +1,7 @@
 ﻿using System;
 using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
+using random = Unity.Mathematics.Random;
 using UnityEngine;
 using EMath = Extensions.Math;
 
@@ -8,11 +9,11 @@ namespace ProcGen
 {
 	public static partial class Generator
 	{
-		public static GameObject Generate(in Input input)
+		public static GameObject Generate(in Input input, random random)
 		{
-			GenerateWalls(in input);
-			GenerateFurniture(in input);
-			GenerateQuests(in input);
+			GenerateWalls(in input, ref random);
+			GenerateFurniture(in input, ref random);
+			GenerateQuests(in input, ref random);
 			throw new NotImplementedException(); // TODO Implement
 		}
 
