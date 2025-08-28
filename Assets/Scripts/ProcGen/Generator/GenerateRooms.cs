@@ -8,7 +8,7 @@ namespace ProcGen
 {
 	public static partial class Generator
 	{
-		public static void GenerateWalls(in Input input, ref random random, out INode<RoomData> rooms)
+		public static void GenerateRooms(in Input input, ref random random, out INode<RoomData> rooms)
 		{
 			throw new NotImplementedException(); // TODO Implement
 		}

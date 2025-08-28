@@ -11,7 +11,7 @@ namespace ProcGen
 	{
 		public static GameObject Generate(in Input input, random random)
 		{
-			GenerateWalls(in input, ref random, out var rooms);
+			GenerateRooms(in input, ref random, out var rooms);
 			GenerateFurniture(in input, ref random, rooms.Leaves());
 			GenerateQuests(ref random, rooms);
 			return rooms.Value.parent.gameObject;
