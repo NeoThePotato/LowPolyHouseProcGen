@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using Unity.Mathematics.Geometry;
 
@@ -17,8 +18,8 @@ namespace ProcGen
 
 		private void OnDrawGizmosSelected()
 		{
-			Gizmos.color = Color.blue;
-			Gizmos.DrawWireCube(_boundingVolume.Center, _boundingVolume.Extents);
+			Handles.color = Color.blue;
+			Handles.DrawWireCube(_boundingVolume.Center, _boundingVolume.Extents);
 		}
 	}
 }
