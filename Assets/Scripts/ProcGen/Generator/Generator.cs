@@ -1,9 +1,9 @@
-﻿using System;
-using Unity.Mathematics;
+﻿using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
-using random = Unity.Mathematics.Random;
 using UnityEngine;
+using random = Unity.Mathematics.Random;
 using EMath = Extensions.Math;
+using ProcGen.Collections;
 
 namespace ProcGen
 {
@@ -11,10 +11,10 @@ namespace ProcGen
 	{
 		public static GameObject Generate(in Input input, random random)
 		{
-			GenerateWalls(in input, ref random);
-			GenerateFurniture(in input, ref random);
-			GenerateQuests(in input, ref random);
-			throw new NotImplementedException(); // TODO Implement
+			GenerateWalls(in input, ref random, out var rooms);
+			GenerateFurniture(in input, ref random, rooms.Leaves());
+			GenerateQuests(ref random, rooms);
+			return rooms.Value.parent.gameObject;
 		}
 
 		public readonly struct Input
