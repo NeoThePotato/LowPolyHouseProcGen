@@ -9,9 +9,9 @@ namespace ProcGen
 {
 	public static partial class Generator
 	{
-		public static GameObject Generate(in Input input, random random)
+		public static GameObject Generate(in Input input, random random, out INode<RoomData> rooms)
 		{
-			GenerateRooms(in input, ref random, out var rooms);
+			GenerateRooms(in input, ref random, out rooms);
 			GenerateFurniture(in input, ref random, rooms.Leaves());
 			GenerateQuests(ref random, rooms);
 			return rooms.Value.parent.gameObject;
