@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace ProcGen
 {
@@ -11,5 +12,10 @@ namespace ProcGen
 		[SerializeField] private Material[] _floorMaterials;
 		[Header("Furniture")]
 		[SerializeField] private GameObject[] _furniture;
+
+		public IReadOnlyList<GameObject> Walls => _walls;
+		public IReadOnlyList<Material> WallMaterials => _wallMaterials;
+		public IReadOnlyList<Material> FloorMaterials => _floorMaterials;
+		public IReadOnlyList<GameObject> Furniture => _furniture;
 	}
 }
