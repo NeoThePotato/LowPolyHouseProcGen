@@ -11,9 +11,9 @@ namespace ProcGen.Collections
 
 		public BinaryTree(T rootValue) => _root = new() { Value = rootValue };
 
-		public T Value { get => _root.Value; set => Value = value; }
-		public INode<T> Left { get => Left; set => Left = value; }
-		public INode<T> Right { get => Right; set => Right = value; }
+		public T Value { get => Root.Value; set => Root.Value = value; }
+		public INode<T> Left { get => Root.Left; set => Root.Left = value; }
+		public INode<T> Right { get => Root.Right; set => Root.Right = value; }
 
 		public int Count => _root.Count;
 
