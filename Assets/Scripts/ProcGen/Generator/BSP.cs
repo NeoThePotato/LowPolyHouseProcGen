@@ -24,9 +24,9 @@ namespace ProcGen
 
 				var roomToSplit = toSplit.Value;
 				ref readonly var boundingVolume = ref roomToSplit.boundingVolume;
-				if (!CanSplit(in input.roomSize.min, boundingVolume, out var result))
+				if (!CanSplit(input.roomSize.Min.xz, boundingVolume.MinMaxXZ(), out var result))
 					return false;
-				SplitAlongRandomAxis(boundingVolume, in result, ref random, out var boundsLeft, out var boundsRight, out var horizontal);
+				SplitAlongRandomAxis(boundingVolume.MinMaxXZ(), in result, ref random, out var boundsLeft, out var boundsRight, out var horizontal);
 				toSplit.Left = CreateNode(roomToSplit, Zip(in boundingVolume, in boundsLeft), horizontal ? LEFT : DOWN);
 				toSplit.Right = CreateNode(roomToSplit, Zip(in boundingVolume, in boundsRight), horizontal ? RIGHT : UP);
 				return true;
@@ -55,13 +55,13 @@ namespace ProcGen
 				return result;
 			}
 
-			private static MinMaxAABB Zip(in MinMaxAABB source, in MinMax2 xy) => new(new(xy.min, source.Min.z), new(xy.max, source.Max.z));
+			private static MinMaxAABB Zip(in MinMaxAABB source, in MinMax2 xy) => new(new(xy.min.x, source.Min.y, xy.min.y), new(xy.max.x, source.Max.y, xy.max.y));
 
-			private static INode<RoomData> CreateNode(Transform parent, MinMaxAABB bounds, string name)
+			private static BinaryTree<RoomData>.Node CreateNode(Transform parent, MinMaxAABB bounds, string name)
 			{
 				var child = new GameObject(parent.name + '-' + name).transform;
-				child.transform.parent = parent;
-				return new BinaryTree<RoomData>.Node()
+				child.SetParent(parent);
+				return new()
 				{
 					Value = new(bounds, child)
 				};

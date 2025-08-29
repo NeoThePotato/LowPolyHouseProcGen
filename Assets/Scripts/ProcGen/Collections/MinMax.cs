@@ -44,5 +44,11 @@ namespace ProcGen.Collections
 		public static float Random(this ref Random random, MinMax range) => random.NextFloat(range.min, range.max);
 		
 		public static float2 Random(this ref Random random, in MinMax2 range) => random.NextFloat2(range.min, range.max);
+
+		public static MinMax2 MinMaxXY(this in MinMaxAABB aabb) => aabb;
+
+		public static MinMax2 MinMaxXZ(this in MinMaxAABB aabb) => new(aabb.Min.xz, aabb.Max.xz);
+
+		public static MinMax2 MinMaxYZ(this in MinMaxAABB aabb) => new(aabb.Min.yz, aabb.Max.yz);
 	}
 }

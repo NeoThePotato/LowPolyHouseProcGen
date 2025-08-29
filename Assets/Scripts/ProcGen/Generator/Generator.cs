@@ -1,8 +1,6 @@
-﻿using Unity.Mathematics;
+﻿using UnityEngine;
 using Unity.Mathematics.Geometry;
-using UnityEngine;
 using random = Unity.Mathematics.Random;
-using EMath = Extensions.Math;
 using ProcGen.Collections;
 
 namespace ProcGen
@@ -21,15 +19,13 @@ namespace ProcGen
 		{
 			public readonly AssetsCollection assets;
 			public readonly MinMaxAABB boundingVolume;
-			public readonly MinMax2 roomSize;
+			public readonly MinMaxAABB roomSize;
 
-			public Input(AssetsCollection assets, MinMaxAABB boundingVolume, float2 minRoomSize, float2 maxRoomSize)
+			public Input(AssetsCollection assets, MinMaxAABB boundingVolume, MinMaxAABB roomSize)
 			{
 				this.assets = assets;
 				this.boundingVolume = boundingVolume;
-				EMath.EnsureSize(ref minRoomSize.x, ref maxRoomSize.x);
-				EMath.EnsureSize(ref minRoomSize.y, ref maxRoomSize.y);
-				roomSize = new(minRoomSize, maxRoomSize);
+				this.roomSize = roomSize;
 			}
 		}
 	}
