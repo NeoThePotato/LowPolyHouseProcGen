@@ -28,7 +28,7 @@ namespace ProcGen
 		/// <param name="random">Random number generator.</param>
 		public static void GenerateFurniture(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random)
 		{
-			throw new NotImplementedException(); // TODO Implement
+			// TODO Implement
 		}
 	}
 }

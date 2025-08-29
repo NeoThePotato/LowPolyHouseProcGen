@@ -9,7 +9,7 @@ namespace ProcGen
 	{
 		public static void GenerateQuests(ref random random, IEnumerable<INode<RoomData>> rooms)
 		{
-			throw new NotImplementedException(); // TODO Implement
+			// TODO Implement
 		}
 	}
 }
