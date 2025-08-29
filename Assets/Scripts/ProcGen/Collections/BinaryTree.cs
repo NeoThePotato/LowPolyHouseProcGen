@@ -35,10 +35,16 @@ namespace ProcGen.Collections
 			public IEnumerator<INode<T>> GetEnumerator()
 			{
 				yield return this;
-				foreach (var item in Left)
-					yield return item;
-				foreach (var item in Right)
-					yield return item;
+				if (Left != null)
+				{
+					foreach (var item in Left)
+						yield return item;
+				}
+				if (Right != null)
+				{
+					foreach (var item in Right)
+						yield return item;
+				}
 			}
 
 			IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
