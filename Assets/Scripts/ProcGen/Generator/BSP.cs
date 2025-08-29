@@ -59,7 +59,7 @@ namespace ProcGen
 
 			private static BinaryTree<RoomData>.Node CreateNode(Transform parent, MinMaxAABB bounds, string name)
 			{
-				var child = new GameObject(parent.name + '-' + name).transform;
+				var child = new GameObject(name).transform;
 				child.SetParent(parent);
 				return new()
 				{

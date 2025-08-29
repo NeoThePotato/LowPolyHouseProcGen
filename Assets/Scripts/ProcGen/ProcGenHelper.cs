@@ -12,14 +12,18 @@ namespace ProcGen
 		[SerializeField] private Transform _parent;
 		[SerializeField] private MinMaxAABB _boundingVolume = new(-1f, 1f);
 		[SerializeField] private MinMaxAABB _roomSize;
-		[SerializeField, Tooltip("Set to 0 to randomly generate a seed.")] private uint seed;
+		[SerializeField, Tooltip("Set to 0 to randomly generate a seed.")] private uint _seed;
 		private INode<Generator.RoomData> _rooms;
 
 		[ContextMenu("Generate")]
 		public void Generate()
 		{
 			RemoveOldGeneration();
-			Generator.Generate(new(_assets, _boundingVolume, _roomSize), GetRandom(), out _rooms).transform.SetParent(_parent);
+			var house = Generator.Generate(new(_assets, _boundingVolume, _roomSize), GetRandom(out var seed), out _rooms);
+			if (!house)
+				return;
+			house.transform.SetParent(_parent);
+			house.name = seed.ToString();
 		}
 
 		private void OnDrawGizmosSelected()
@@ -33,11 +37,11 @@ namespace ProcGen
 				Handles.DrawWireCube(room.Value.boundingVolume.Center, room.Value.boundingVolume.Extents);
 		}
 
-		private random GetRandom()
+		private random GetRandom(out uint seed)
 		{
-			if (seed == 0)
-				return new((uint)UnityEngine.Random.Range(int.MinValue, int.MaxValue));
-			return new(seed);
+			if (_seed == 0)
+				return new(seed = (uint)UnityEngine.Random.Range(int.MinValue, int.MaxValue));
+			return new(seed = _seed);
 		}
 
 		private void RemoveOldGeneration()

@@ -9,9 +9,7 @@ namespace ProcGen
 	{
 		public static void GenerateRooms(in Input input, ref random random, out INode<RoomData> rooms)
 		{
-			const string ROOT = "Root";
-
-			BinaryTree<RoomData> tree = new(new(input.boundingVolume, new GameObject(ROOT).transform));
+			BinaryTree<RoomData> tree = new(new(input.boundingVolume, new GameObject().transform));
 			BSP.SplitRecursive(in input, ref random, tree);
 			rooms = tree.Root;
 		}
