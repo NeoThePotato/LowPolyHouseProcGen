@@ -21,6 +21,7 @@ namespace ProcGen
 		{
 			RemoveOldGeneration();
 			Generator.Generate(new(_assets, _boundingVolume, minRoomSize, maxRoomSize), GetRandom(), out _rooms);
+			_rooms.Value.parent.SetParent(_parent);
 		}
 
 		private void OnDrawGizmosSelected()
@@ -43,10 +44,10 @@ namespace ProcGen
 
 		private void RemoveOldGeneration()
 		{
-			if (_rooms == null)
+			if (_parent.childCount == 0)
 				return;
-			foreach (var room in _rooms)
-				Destroy(room.Value.parent.gameObject);
+			while (_parent.childCount > 0)
+				Destroy(_parent.GetChild(0).gameObject);
 			_rooms = null;
 		}
 	}
