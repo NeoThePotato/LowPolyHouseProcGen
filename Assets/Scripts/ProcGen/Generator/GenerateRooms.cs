@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Mathematics.Geometry;
 using random = Unity.Mathematics.Random;
 using ProcGen.Collections;
@@ -10,7 +9,11 @@ namespace ProcGen
 	{
 		public static void GenerateRooms(in Input input, ref random random, out INode<RoomData> rooms)
 		{
-			throw new NotImplementedException(); // TODO Implement
+			const string ROOT = "Root";
+
+			BinaryTree<RoomData> tree = new(new(input.boundingVolume, new GameObject(ROOT).transform));
+			BSP.SplitRecursive(in input, ref random, tree);
+			rooms = tree.Root;
 		}
 
 		public readonly struct RoomData
