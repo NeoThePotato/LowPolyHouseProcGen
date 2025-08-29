@@ -466,6 +466,16 @@ MonoBehaviour:
       x: 10
       y: 3
       z: 10
+  _roomSize:
+    Min:
+      x: 3
+      y: 1
+      z: 3
+    Max:
+      x: 7
+      y: 1
+      z: 7
+  seed: 0
 --- !u!4 &1497775666
 Transform:
   m_ObjectHideFlags: 0

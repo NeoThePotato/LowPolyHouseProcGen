@@ -1,6 +1,5 @@
 using UnityEditor;
 using UnityEngine;
-using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
 using random = Unity.Mathematics.Random;
 using ProcGen.Collections;
@@ -12,7 +11,7 @@ namespace ProcGen
 		[SerializeField] private AssetsCollection _assets;
 		[SerializeField] private Transform _parent;
 		[SerializeField] private MinMaxAABB _boundingVolume = new(-1f, 1f);
-		[SerializeField] private float2 minRoomSize, maxRoomSize;
+		[SerializeField] private MinMaxAABB _roomSize;
 		[SerializeField, Tooltip("Set to 0 to randomly generate a seed.")] private uint seed;
 		private INode<Generator.RoomData> _rooms;
 
@@ -20,8 +19,7 @@ namespace ProcGen
 		public void Generate()
 		{
 			RemoveOldGeneration();
-			Generator.Generate(new(_assets, _boundingVolume, minRoomSize, maxRoomSize), GetRandom(), out _rooms);
-			_rooms.Value.parent.SetParent(_parent);
+			Generator.Generate(new(_assets, _boundingVolume, _roomSize), GetRandom(), out _rooms).transform.SetParent(_parent);
 		}
 
 		private void OnDrawGizmosSelected()
@@ -44,10 +42,9 @@ namespace ProcGen
 
 		private void RemoveOldGeneration()
 		{
-			if (_parent.childCount == 0)
+			if (_rooms == null)
 				return;
-			while (_parent.childCount > 0)
-				Destroy(_parent.GetChild(0).gameObject);
+			DestroyImmediate(_rooms.Value.parent.gameObject);
 			_rooms = null;
 		}
 	}
