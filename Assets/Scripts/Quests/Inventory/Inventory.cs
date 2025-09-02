@@ -18,6 +18,8 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItem(Item itemToRemove)
     {
+        if (items.Count == 0) return;
+
         if (itemToRemove != null && items.Contains(itemToRemove))
         {
             items.Remove(itemToRemove);
@@ -26,6 +28,8 @@ public class Inventory : MonoBehaviour
 
     public (bool, Item) HasItemOfType(Item.ItemType itemTypeToCheck)
     {
+        if (items.Count == 0) return (false, null);
+
         for (int i = 0; i < items.Count; i++)
         {
             if (items[i].itemType == itemTypeToCheck)

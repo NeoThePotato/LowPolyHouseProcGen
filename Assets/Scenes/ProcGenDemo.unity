@@ -475,7 +475,7 @@ MonoBehaviour:
       x: 7
       y: 1
       z: 7
-  seed: 0
+  _seed: 0
 --- !u!4 &1497775666
 Transform:
   m_ObjectHideFlags: 0
