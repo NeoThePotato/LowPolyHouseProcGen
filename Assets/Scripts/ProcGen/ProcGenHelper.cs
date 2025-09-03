@@ -44,7 +44,8 @@ namespace ProcGen
 			return new(seed = _seed);
 		}
 
-		private void RemoveOldGeneration()
+        [ContextMenu("RemoveOldGen")]
+        private void RemoveOldGeneration()
 		{
 			if (_rooms == null)
 				return;

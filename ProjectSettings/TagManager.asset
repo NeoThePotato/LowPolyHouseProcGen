@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Interactable
   - Item
+  - Furniture
   layers:
   - Default
   - TransparentFX
