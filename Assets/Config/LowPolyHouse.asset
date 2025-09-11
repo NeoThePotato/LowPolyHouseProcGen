@@ -1020,3 +1020,7 @@ MonoBehaviour:
   - {fileID: 6817152468376308952, guid: 92eac7adb839a2d4289009a16f6a27b9, type: 3}
   - {fileID: 5778372380473676004, guid: 7dfb2abee32a53546b0b750674989809, type: 3}
   - {fileID: 3278922211467099229, guid: a704e6736b36d0443ad816cbbe5b941c, type: 3}
+  _keyRoomObjects:
+  - {fileID: 2150986582565596579, guid: bd35a979eef62bb4c8a41c824456fbf0, type: 3}
+  _lockedRoomObjects:
+  - {fileID: 7789538269461074155, guid: 1375bd875358c924989003aaa65ceea2, type: 3}

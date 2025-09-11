@@ -10,8 +10,8 @@ namespace ProcGen
 		public static GameObject Generate(in Input input, random random, out INode<RoomData> rooms)
 		{
 			GenerateRooms(in input, ref random, out rooms);
-			GenerateFurniture(in input, ref random, rooms.Leaves());
-			GenerateQuests(ref random, rooms);
+            var roomTypes = GenerateQuests(ref random, rooms);
+            GenerateFurniture(in input, ref random, rooms.Leaves(), roomTypes);
 			return rooms.Value.parent.gameObject;
 		}
 

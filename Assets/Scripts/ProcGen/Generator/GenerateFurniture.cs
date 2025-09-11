@@ -18,10 +18,11 @@ namespace ProcGen
         /// <param name="input">Generation input.</param>
         /// <param name="random">Random number generator.</param>
         /// <param name="rooms">Rooms to furnish.</param>
-        public static void GenerateFurniture(in Input input, ref random random, IEnumerable<INode<RoomData>> rooms)
+        public static void GenerateFurniture(in Input input, ref random random, IEnumerable<INode<RoomData>> rooms, Dictionary<INode<RoomData>, RoomType> roomTypes)
 		{
+			// TODO talk with nehorai about the duplicated lists
 			foreach (var room in rooms)
-				GenerateFurniture(room.Value, input.assets.Furniture, ref random);
+				GenerateFurniture(room.Value, input.assets.Furniture, ref random, roomTypes);
 		}
 
 		/// <summary>
@@ -30,14 +31,24 @@ namespace ProcGen
 		/// <param name="roomBounds">Bounds of the room.</param>
 		/// <param name="furniture">Available furniture pool.</param>
 		/// <param name="random">Random number generator.</param>
-		public static void GenerateFurniture(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random)
+		public static void GenerateFurniture(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random, Dictionary<INode<RoomData>, RoomType> roomTypes)
 		{
-			GameObject go = assets.Furniture[random.NextInt(0, assets.Furniture.Count)];
+			GameObject go = assets.KeyRoomObjects[random.NextInt(0, assets.KeyRoomObjects.Count)];
 			go.tag = "Furniture";
 
             Vector3 position = random.NextFloat3(roomBounds.boundingVolume.Min, roomBounds.boundingVolume.Max);
             quaternion rotation = quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
             GameObject.Instantiate(go, position, rotation, roomBounds.parent);
         }
-	}
+
+		public static void PlaceKeyRoomObjects()
+		{
+            // TODO implement
+        }
+
+		public static void PlaceLockedRoomObjects()
+		{
+            // TODO implement
+        }
+    }
 }
