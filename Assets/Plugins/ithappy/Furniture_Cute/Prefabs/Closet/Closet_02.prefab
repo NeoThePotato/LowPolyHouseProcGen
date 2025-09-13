@@ -118,6 +118,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Closet_02_Door_01
       objectReference: {fileID: 0}
+    - target: {fileID: 4627073832541384079, guid: 0a4ae5bf52dad694092d7e0c7288e49f, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5439639775563888437, guid: 0a4ae5bf52dad694092d7e0c7288e49f, type: 3}
       propertyPath: m_RootOrder
       value: 0

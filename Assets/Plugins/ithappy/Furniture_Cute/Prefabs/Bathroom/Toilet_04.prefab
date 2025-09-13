@@ -159,6 +159,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Toilet_04_Cover
       objectReference: {fileID: 0}
+    - target: {fileID: 6359141014062974013, guid: e96451b345ea8f84aaf17823e4974268, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

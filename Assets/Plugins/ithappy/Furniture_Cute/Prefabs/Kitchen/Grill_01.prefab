@@ -115,6 +115,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grill_01_Cover
       objectReference: {fileID: 0}
+    - target: {fileID: 3846850391889853540, guid: 416357a5b1eb5db44b377ec3fa2cd4a8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4479131784178231006, guid: 416357a5b1eb5db44b377ec3fa2cd4a8, type: 3}
       propertyPath: m_RootOrder
       value: 0

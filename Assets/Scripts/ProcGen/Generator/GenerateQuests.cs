@@ -5,6 +5,7 @@ using ProcGen.Collections;
 using System.Linq;
 using static ProcGen.Generator;
 using Extensions;
+using System.Diagnostics;
 
 namespace ProcGen
 {
@@ -22,8 +23,13 @@ namespace ProcGen
         {
             Dictionary<INode<RoomData>, RoomType> roomTypes = new();
             foreach (var room in rooms)
-                roomTypes.Add(room, RoomType.None);
-
+            {
+                if (!roomTypes.ContainsKey(room))
+                    roomTypes.Add(room, RoomType.None);
+                else
+                    UnityEngine.Debug.Log("Duplicate found");
+            }
+                
             var firstRoom = roomTypes.First().Key;
             roomTypes[firstRoom] = RoomType.Entrance;
             var lastRoom = roomTypes.Last().Key;
@@ -43,13 +49,13 @@ namespace ProcGen
         public static INode<RoomData> GetRandomRoomExcept(Dictionary<INode<RoomData>, RoomType> roomList, List<INode<RoomData>> excludedList, ref random random)
         {
             if (roomList.Count <= excludedList.Count + 2)
-                throw new ArgumentException("Excluded list cannot be greater than or equal to the room list.");
+                throw new ArgumentException("Excluded list cannot be greater than or equal to the room list - 2.");
 
             INode<RoomData> room = null;
             while (room == null)
             {
                 List<INode<RoomData>> availableRooms = roomList.Keys.Except(excludedList).ToList();
-                room = availableRooms[random.NextInt(0, availableRooms.Count)];
+                room = availableRooms[random.NextInt(1, availableRooms.Count)];
                 if (CheckParentAmountSafe(room, roomList.First().Key))
                     return room;
                 else

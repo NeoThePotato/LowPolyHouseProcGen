@@ -184,6 +184,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kitchen_B_08_Shelf_01
       objectReference: {fileID: 0}
+    - target: {fileID: 8097793750407270527, guid: bce376e46f2d2284297e264546fb84b0, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 8875174500800858821, guid: bce376e46f2d2284297e264546fb84b0, type: 3}
       propertyPath: m_RootOrder
       value: 0

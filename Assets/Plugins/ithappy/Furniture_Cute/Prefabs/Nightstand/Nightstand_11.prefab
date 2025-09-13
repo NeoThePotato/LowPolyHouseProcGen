@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 2bd57d677d000984681a739dca1c3f44, type: 3}
@@ -56,6 +57,15 @@ PrefabInstance:
       value: Nightstand_11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2bd57d677d000984681a739dca1c3f44, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8706784706539414341}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2bd57d677d000984681a739dca1c3f44, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5283513610741943627}
   m_SourcePrefab: {fileID: 100100000, guid: 2bd57d677d000984681a739dca1c3f44, type: 3}
 --- !u!4 &2603780226176159879 stripped
 Transform:
@@ -75,9 +85,17 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3416451996655995453}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2813057655935279233, guid: 2bd57d677d000984681a739dca1c3f44, type: 3}
@@ -86,6 +104,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2603780226176159879}
     m_Modifications:
     - target: {fileID: 5069617442944720562, guid: dda71cf5cd9b93f4a801412cdf441588, type: 3}
@@ -137,4 +156,12 @@ PrefabInstance:
       value: Nightstand_11_Shelf
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dda71cf5cd9b93f4a801412cdf441588, type: 3}
+--- !u!4 &8706784706539414341 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5069617442944720562, guid: dda71cf5cd9b93f4a801412cdf441588, type: 3}
+  m_PrefabInstance: {fileID: 4507629041952357879}
+  m_PrefabAsset: {fileID: 0}

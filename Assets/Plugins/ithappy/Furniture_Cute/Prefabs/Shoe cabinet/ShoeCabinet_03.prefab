@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShoeCabinet_03_Door
       objectReference: {fileID: 0}
+    - target: {fileID: 3248467562227672666, guid: 25433712587dcc044a5dcdb17ed2cf81, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

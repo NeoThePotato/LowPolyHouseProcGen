@@ -118,6 +118,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Work_Table_02_Shelf_02
       objectReference: {fileID: 0}
+    - target: {fileID: 1253470045441978056, guid: 4a338414a0c54714b875166329909aae, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 1886701419484492914, guid: 4a338414a0c54714b875166329909aae, type: 3}
       propertyPath: m_RootOrder
       value: 1

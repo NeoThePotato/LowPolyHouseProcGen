@@ -78,6 +78,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kitchen_A_01_Door_02
       objectReference: {fileID: 0}
+    - target: {fileID: 2719983353670404734, guid: b354719ab1d60ee4f8c57787a78ee857, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 3383473111871541444, guid: b354719ab1d60ee4f8c57787a78ee857, type: 3}
       propertyPath: m_RootOrder
       value: 1

@@ -159,6 +159,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kitchen_C_12_Door
       objectReference: {fileID: 0}
+    - target: {fileID: 1958734845010649155, guid: 07a42b7f27dfb1c4ba4103395df2ed76, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

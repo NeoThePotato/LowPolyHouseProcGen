@@ -15,7 +15,7 @@ namespace ProcGen
 
         /// <summary>
         /// Generate furniture for all <paramref name="rooms"/>.
-        /// </summary>
+        /// </summary>d
         /// <param name="input">Generation input.</param>
         /// <param name="random">Random number generator.</param>
         /// <param name="rooms">Rooms to furnish.</param>
@@ -26,34 +26,37 @@ namespace ProcGen
 			//Debug.Log(roomTypes.Count());
 			// TODO talk with nehorai about the duplicated lists
 			foreach (var room in rooms)
-            {
-				
-
-					
+            {	
 				switch (roomTypes[room])
                 {
 					case RoomType.KeyRoom:
 						PlaceKeyRoomObjects(room.Value, input.assets.Furniture, ref random, roomTypes);
-							Debug.LogWarning("KEyRoom");
+						Debug.Log("KeyRoom");
 						break;
 
 					case RoomType.LockedRoom:
 						PlaceLockedRoomObjects(room.Value, input.assets.Furniture, ref random, roomTypes);
-						Debug.LogWarning("DoorRoom");
+						Debug.Log("DoorRoom");
 						break;
 
-					case RoomType.None:
-                         GenerateFurniture(room.Value, input.assets.Furniture, ref random, roomTypes);
-                         break;
+                    case RoomType.Entrance:
+                        PlaceEntranceRoomObjects(room.Value, input.assets.Furniture, ref random, roomTypes);
+                        Debug.Log("EntranceRoom");
+                        break;
+
+                    case RoomType.Exit:
+                        PlaceExitRoomObjects(room.Value, input.assets.Furniture, ref random, roomTypes);
+                        Debug.Log("ExitRoom");
+                        break;
+
+                    case RoomType.None:
+                        GenerateFurniture(room.Value, input.assets.Furniture, ref random, roomTypes);
+                        break;
 
 					default:
 						GenerateFurniture(room.Value, input.assets.Furniture, ref random, roomTypes);
-							
-							break;
-
-
-
-					}
+						break;
+				}
 			}
 				
 		}
@@ -93,5 +96,25 @@ namespace ProcGen
 			quaternion rotation = quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
 			GameObject.Instantiate(go, position, rotation, roomBounds.parent);
 		}
+
+        public static void PlaceEntranceRoomObjects(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random, Dictionary<INode<RoomData>, RoomType> roomTypes)
+        {
+            GameObject go = assets.EntranceRoomObjects[random.NextInt(0, assets.EntranceRoomObjects.Count)];
+            go.tag = "Furniture";
+
+            Vector3 position = random.NextFloat3(roomBounds.boundingVolume.Min, roomBounds.boundingVolume.Max);
+            quaternion rotation = quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
+            GameObject.Instantiate(go, position, rotation, roomBounds.parent);
+        }
+
+        public static void PlaceExitRoomObjects(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random, Dictionary<INode<RoomData>, RoomType> roomTypes)
+        {
+            GameObject go = assets.ExitRoomObjects[random.NextInt(0, assets.ExitRoomObjects.Count)];
+            go.tag = "Furniture";
+
+            Vector3 position = random.NextFloat3(roomBounds.boundingVolume.Min, roomBounds.boundingVolume.Max);
+            quaternion rotation = quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
+            GameObject.Instantiate(go, position, rotation, roomBounds.parent);
+        }
     }
 }
