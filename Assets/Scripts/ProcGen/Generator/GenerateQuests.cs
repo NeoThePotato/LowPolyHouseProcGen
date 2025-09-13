@@ -21,19 +21,15 @@ namespace ProcGen
     {
         public static Dictionary<INode<RoomData>, RoomType> AssignTypes(this INode<RoomData> rooms, ref random random)
         {
-            Dictionary<INode<RoomData>, RoomType> roomTypes = new();
             foreach (var room in rooms.Leaves())
             {
-                if (!roomTypes.ContainsKey(room))
-                    roomTypes.Add(room, RoomType.None);
-                else
-                    UnityEngine.Debug.Log("Duplicate found");
+                room.Value.roomType = RoomType.None;
             }
                 
             var root = rooms;
-            roomTypes[root] = RoomType.Entrance;
+            root.Value.roomType = RoomType.Entrance;
             var lastRoom = roomTypes.Last().Key;
-            roomTypes[lastRoom] = RoomType.Exit;
+            lastRoom.Value.roomType = RoomType.Exit;
 
             var lockedRoom = GetRandomRoomExcept(roomTypes, new List<INode<RoomData>> {lastRoom}, ref random);
             roomTypes[lockedRoom] = RoomType.LockedRoom;
@@ -80,6 +76,12 @@ namespace ProcGen
                 listToReturn.Add(target);
             }
             return listToReturn;
+        }
+
+        public static INode<RoomData> GetLastInTree(INode<RoomData> root)
+        {
+            
+            return null;
         }
 
         public static void RandomRoomAssignmentExcept(Dictionary<INode<RoomData>, RoomType> dict, ref random random)

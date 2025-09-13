@@ -14,10 +14,11 @@ namespace ProcGen
 			rooms = tree.Root;
 		}
 
-		public readonly struct RoomData
+		public class RoomData
 		{
 			public readonly MinMaxAABB boundingVolume;
 			public readonly Transform parent;
+			public RoomType roomType;
 
 			public RoomData(in MinMaxAABB boundingVolume, Transform parent)
 			{
