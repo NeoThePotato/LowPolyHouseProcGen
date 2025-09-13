@@ -1022,5 +1022,24 @@ MonoBehaviour:
   - {fileID: 3278922211467099229, guid: a704e6736b36d0443ad816cbbe5b941c, type: 3}
   _keyRoomObjects:
   - {fileID: 2150986582565596579, guid: bd35a979eef62bb4c8a41c824456fbf0, type: 3}
+  - {fileID: 5905248054224261963, guid: c08d7990628aa8f4aa4ccca5da19265b, type: 3}
+  - {fileID: 2536335347489856160, guid: a41814b276ca9a34c88cd121b04c0021, type: 3}
+  - {fileID: 6399679931726185991, guid: 4942626760fe890408d5d3f48b3e537d, type: 3}
   _lockedRoomObjects:
   - {fileID: 7789538269461074155, guid: 1375bd875358c924989003aaa65ceea2, type: 3}
+  - {fileID: 3801777340634428639, guid: c99c73924ed839f42b8be1670f9d785e, type: 3}
+  - {fileID: 4653683737361833653, guid: 8c9be169c04dd0f4ab8323a75ba10ee0, type: 3}
+  - {fileID: 7712624708677743519, guid: 43e2fdbbd48333940a660ee1282198aa, type: 3}
+  _entranceRoomObjects:
+  - {fileID: 187782804585425796, guid: 6538f55cdbaaaf742bbbe57366fd86b4, type: 3}
+  - {fileID: 7461394479462382668, guid: 2e7553a418ee64449994ece4ffc6211a, type: 3}
+  - {fileID: 7020291530468503989, guid: 99256ee5e02db4f49b2f2f31549217f0, type: 3}
+  - {fileID: 1932715007406864575, guid: 2b14b662e5809cb45b71063d611e8fab, type: 3}
+  - {fileID: 7847071123594557878, guid: 09535498ef345f14d9cdb38c960ff831, type: 3}
+  - {fileID: 128438260466953119, guid: 4487ae127a062474cb8b23b7d0b435db, type: 3}
+  _exitRoomObjects:
+  - {fileID: 8154362775939770528, guid: 4d6e888bff74c8a499ac913eab513aae, type: 3}
+  - {fileID: 1734064786074012165, guid: 87f0a2ce99b63b5499c12bcba11b51b3, type: 3}
+  - {fileID: 3710957017321604816, guid: 72049c3c998f8cf48b9a885c4b23ed72, type: 3}
+  - {fileID: 5768926317649895264, guid: 3d693a018d0e6b54caa6fbf418a7d520, type: 3}
+  - {fileID: 6398380710957748849, guid: ec702a439b5a7e344a0c1df6ee89586a, type: 3}

@@ -11,7 +11,7 @@ namespace ProcGen
 {
 	public static partial class Generator
 	{
-        public static Dictionary<INode<RoomData>, RoomType> GenerateQuests(ref random random, IEnumerable<INode<RoomData>> rooms)
+        public static Dictionary<INode<RoomData>, RoomType> GenerateQuests(ref random random, INode<RoomData> rooms)
 		{
             return RoomTypeAssigner.AssignTypes(rooms, ref random);
         }
@@ -19,10 +19,10 @@ namespace ProcGen
 
     public static class RoomTypeAssigner
     {
-        public static Dictionary<INode<RoomData>, RoomType> AssignTypes(this IEnumerable<INode<RoomData>> rooms, ref random random)
+        public static Dictionary<INode<RoomData>, RoomType> AssignTypes(this INode<RoomData> rooms, ref random random)
         {
             Dictionary<INode<RoomData>, RoomType> roomTypes = new();
-            foreach (var room in rooms)
+            foreach (var room in rooms.Leaves())
             {
                 if (!roomTypes.ContainsKey(room))
                     roomTypes.Add(room, RoomType.None);
@@ -30,18 +30,18 @@ namespace ProcGen
                     UnityEngine.Debug.Log("Duplicate found");
             }
                 
-            var firstRoom = roomTypes.First().Key;
-            roomTypes[firstRoom] = RoomType.Entrance;
+            var root = rooms;
+            roomTypes[root] = RoomType.Entrance;
             var lastRoom = roomTypes.Last().Key;
             roomTypes[lastRoom] = RoomType.Exit;
 
             var lockedRoom = GetRandomRoomExcept(roomTypes, new List<INode<RoomData>> {lastRoom}, ref random);
             roomTypes[lockedRoom] = RoomType.LockedRoom;
-            var parents = GetAllParents(lockedRoom, firstRoom);
+            var parents = GetAllParents(lockedRoom, root);
             var keyRoom = parents[random.NextInt(0, parents.Count)];
             roomTypes[keyRoom] = RoomType.KeyRoom;
 
-            RandomRoomAssignmentExcept(roomTypes);
+            RandomRoomAssignmentExcept(roomTypes, ref random);
 
             return roomTypes;
         }
@@ -82,7 +82,7 @@ namespace ProcGen
             return listToReturn;
         }
 
-        public static void RandomRoomAssignmentExcept(Dictionary<INode<RoomData>, RoomType> dict)
+        public static void RandomRoomAssignmentExcept(Dictionary<INode<RoomData>, RoomType> dict, ref random random)
         {
             //foreach (var room in dict)
             //{
@@ -93,7 +93,7 @@ namespace ProcGen
             {
                 var room = dict.ElementAt(i);
                 if (room.Value == RoomType.None)
-                    dict[room.Key] = (RoomType)UnityEngine.Random.Range(5, Enum.GetValues(typeof(RoomType)).Length);
+                    dict[room.Key] = (RoomType)random.NextInt(5, Enum.GetValues(typeof(RoomType)).Length);
             }
         }
     }
