@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bath_Mirror_04_Door
       objectReference: {fileID: 0}
+    - target: {fileID: 5711266703149164200, guid: b0b8ecd7a04011b498b0d7db47325250, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
