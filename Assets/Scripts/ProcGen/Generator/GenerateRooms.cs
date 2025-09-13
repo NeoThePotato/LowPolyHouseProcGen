@@ -18,7 +18,7 @@ namespace ProcGen
 		{
 			public readonly MinMaxAABB boundingVolume;
 			public readonly Transform parent;
-			public RoomType roomType;
+			public RoomType roomType = RoomType.None;
 
 			public RoomData(in MinMaxAABB boundingVolume, Transform parent)
 			{

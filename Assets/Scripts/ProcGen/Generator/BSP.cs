@@ -12,10 +12,11 @@ namespace ProcGen
 		{
 			public static void SplitRecursive(in Input input, ref random random, INode<RoomData> root)
 			{
+				
 				if (!TrySplitSingle(input, ref random, root))
 					return;
 				SplitRecursive(input, ref random, root.Left);
-				SplitRecursive(input, ref random, root.Right);
+				SplitRecursive(input, ref random, root.Right);	
 			}
 
 			public static bool TrySplitSingle(in Input input, ref random random, INode<RoomData> toSplit)

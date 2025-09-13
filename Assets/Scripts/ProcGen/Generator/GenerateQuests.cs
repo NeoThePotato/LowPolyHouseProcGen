@@ -11,9 +11,11 @@ namespace ProcGen
 {
 	public static partial class Generator
 	{
-        public static void GenerateQuests(ref random random, INode<RoomData> rooms)
+        public static INode<RoomData> GenerateQuests(ref random random, INode<RoomData> rooms)
 		{
-             RoomTypeAssigner.AssignTypes(rooms, ref random);
+            
+            return RoomTypeAssigner.AssignTypes(rooms, ref random);
+
         }
 	}
 
@@ -21,13 +23,11 @@ namespace ProcGen
     {
         public static INode<RoomData> AssignTypes(this INode<RoomData> rooms, ref random random)
         {
-            foreach (var room in rooms.Leaves())
-            {
-                room.Value.roomType = RoomType.None;
-            }
+            
                 
             var root = rooms;
-            root.Value.roomType = RoomType.Entrance;
+            var first = rooms.Leaves().First();
+            first.Value.roomType = RoomType.Entrance;
             var lastRoom = GetLastInTree(root);
             lastRoom.Value.roomType = RoomType.Exit;
 
@@ -35,6 +35,7 @@ namespace ProcGen
             lockedRoom.Value.roomType = RoomType.LockedRoom;
             var parents = GetAllParents(lockedRoom, root);
             var keyRoom = parents[random.NextInt(0, parents.Count-1)];
+            UnityEngine.Debug.Assert(keyRoom.IsLeaf());
             keyRoom.Value.roomType = RoomType.KeyRoom;
 
             RandomRoomAssignmentExcept(root, ref random);
@@ -69,13 +70,8 @@ namespace ProcGen
 
         public static List<INode<RoomData>> GetAllParents(INode<RoomData> target, INode<RoomData> root)
         {
-            var listToReturn = new List<INode<RoomData>>();
-            while (target.Parent(root) != null)
-            {
-                target = target.Parent(root);
-                listToReturn.Add(target);
-            }
-            return listToReturn;
+           return root.Leaves().TakeUntil(n => n == target).ToList();
+
         }
 
         public static INode<RoomData> GetLastInTree(INode<RoomData> root)

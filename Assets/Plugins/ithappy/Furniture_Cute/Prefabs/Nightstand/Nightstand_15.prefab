@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Nightstand_15
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 09ee5a187f6a5564b9c3b7f7886e2706, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bed_14_Shelf_02
       objectReference: {fileID: 0}
+    - target: {fileID: 5856974144244095298, guid: 43f462c9234969c409852222954d9f50, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6486298777381585912, guid: 43f462c9234969c409852222954d9f50, type: 3}
       propertyPath: m_RootOrder
       value: 1

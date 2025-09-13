@@ -159,6 +159,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Microwave_03_Door
       objectReference: {fileID: 0}
+    - target: {fileID: 1891997140132014668, guid: 3527ae939efbf67439665e4712c3eaf9, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

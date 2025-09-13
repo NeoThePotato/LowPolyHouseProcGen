@@ -26,7 +26,8 @@ namespace ProcGen
 			//Debug.Log(roomTypes.Count());
 			// TODO talk with nehorai about the duplicated lists
 			foreach (var room in rooms)
-            {	
+            {
+                Debug.LogWarning("Passed on a room");
 				switch (room.Value.roomType)
                 {
 					case RoomType.KeyRoom:
@@ -50,11 +51,13 @@ namespace ProcGen
                         break;
 
                     case RoomType.None:
-                        GenerateFurniture(room.Value, input.assets.Furniture, ref random);
+                       GenerateFurniture(room.Value, input.assets.Furniture, ref random);
+                        Debug.Log("NoneRoom");
                         break;
 
 					default:
 						GenerateFurniture(room.Value, input.assets.Furniture, ref random);
+                        Debug.Log($"RoomType = {room.Value.roomType}");
 						break;
 				}
 			}
