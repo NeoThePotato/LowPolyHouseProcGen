@@ -19,7 +19,7 @@ namespace ProcGen
         /// <param name="input">Generation input.</param>
         /// <param name="random">Random number generator.</param>
         /// <param name="rooms">Rooms to furnish.</param>
-        public static void GenerateFurniture(in Input input, ref random random, IEnumerable<INode<RoomData>> rooms, Dictionary<INode<RoomData>, RoomType> roomTypes)
+        public static void GenerateFurniture(in Input input, ref random random, IEnumerable<INode<RoomData>> rooms)
 		{
 
 			//Debug.Log(rooms.Count());
@@ -27,34 +27,34 @@ namespace ProcGen
 			// TODO talk with nehorai about the duplicated lists
 			foreach (var room in rooms)
             {	
-				switch (roomTypes[room])
+				switch (room.Value.roomType)
                 {
 					case RoomType.KeyRoom:
-						PlaceKeyRoomObjects(room.Value, input.assets.Furniture, ref random, roomTypes);
+						PlaceKeyRoomObjects(room.Value, input.assets.Furniture, ref random);
 						Debug.Log("KeyRoom");
 						break;
 
 					case RoomType.LockedRoom:
-						PlaceLockedRoomObjects(room.Value, input.assets.Furniture, ref random, roomTypes);
+						PlaceLockedRoomObjects(room.Value, input.assets.Furniture, ref random);
 						Debug.Log("DoorRoom");
 						break;
 
                     case RoomType.Entrance:
-                        PlaceEntranceRoomObjects(room.Value, input.assets.Furniture, ref random, roomTypes);
+                        PlaceEntranceRoomObjects(room.Value, input.assets.Furniture, ref random);
                         Debug.Log("EntranceRoom");
                         break;
 
                     case RoomType.Exit:
-                        PlaceExitRoomObjects(room.Value, input.assets.Furniture, ref random, roomTypes);
+                        PlaceExitRoomObjects(room.Value, input.assets.Furniture, ref random);
                         Debug.Log("ExitRoom");
                         break;
 
                     case RoomType.None:
-                        GenerateFurniture(room.Value, input.assets.Furniture, ref random, roomTypes);
+                        GenerateFurniture(room.Value, input.assets.Furniture, ref random);
                         break;
 
 					default:
-						GenerateFurniture(room.Value, input.assets.Furniture, ref random, roomTypes);
+						GenerateFurniture(room.Value, input.assets.Furniture, ref random);
 						break;
 				}
 			}
@@ -67,7 +67,7 @@ namespace ProcGen
 		/// <param name="roomBounds">Bounds of the room.</param>
 		/// <param name="furniture">Available furniture pool.</param>
 		/// <param name="random">Random number generator.</param>
-		public static void GenerateFurniture(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random, Dictionary<INode<RoomData>, RoomType> roomTypes)
+		public static void GenerateFurniture(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random)
 		{
 			GameObject go = assets.Furniture[random.NextInt(0, assets.Furniture.Count)];
 			go.tag = "Furniture";
@@ -77,7 +77,7 @@ namespace ProcGen
             GameObject.Instantiate(go, position, rotation, roomBounds.parent);
         }
 
-		public static void PlaceKeyRoomObjects(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random, Dictionary<INode<RoomData>, RoomType> roomTypes)
+		public static void PlaceKeyRoomObjects(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random)
 		{
             //Generate mandatory room item
             GameObject mango = assets.KeyRoomObjects[0];
@@ -99,7 +99,7 @@ namespace ProcGen
             }
 		}
 
-		public static void PlaceLockedRoomObjects(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random, Dictionary<INode<RoomData>, RoomType> roomTypes)
+		public static void PlaceLockedRoomObjects(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random)
 		{
             //Generate mandatory room item
             GameObject mango = assets.LockedRoomObjects[0];
@@ -121,7 +121,7 @@ namespace ProcGen
             }
         }
 
-        public static void PlaceEntranceRoomObjects(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random, Dictionary<INode<RoomData>, RoomType> roomTypes)
+        public static void PlaceEntranceRoomObjects(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random)
         {
             GameObject go = assets.EntranceRoomObjects[random.NextInt(0, assets.EntranceRoomObjects.Count)];
             go.tag = "Furniture";
@@ -131,7 +131,7 @@ namespace ProcGen
             GameObject.Instantiate(go, position, rotation, roomBounds.parent);
         }
 
-        public static void PlaceExitRoomObjects(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random, Dictionary<INode<RoomData>, RoomType> roomTypes)
+        public static void PlaceExitRoomObjects(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random)
         {
             GameObject go = assets.ExitRoomObjects[random.NextInt(0, assets.ExitRoomObjects.Count)];
             go.tag = "Furniture";
