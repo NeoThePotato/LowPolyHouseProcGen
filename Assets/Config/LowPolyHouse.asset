@@ -1043,9 +1043,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   _puzzleRoomObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2422713507370130997, guid: c80b5a4fb2239914b8054270902140de, type: 3}
+  - {fileID: 2422713507370130997, guid: fd421b3a79b8e104bae9637b2cb28007, type: 3}
+  - {fileID: 2422713507370130997, guid: 91bcc7b25c451444aa09f571e9e8361a, type: 3}
   _treasureRoomObjects:
   - {fileID: 0}
   - {fileID: 0}
