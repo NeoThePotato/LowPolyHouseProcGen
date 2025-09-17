@@ -6,6 +6,7 @@ using ProcGen.Collections;
 using Unity.Mathematics;
 using UnityEditor;
 using System.Linq;
+using UnityEngine.UIElements;
 
 namespace ProcGen
 {
@@ -76,6 +77,7 @@ namespace ProcGen
 			go.tag = "Furniture";
 
             Vector3 position = random.NextFloat3(roomBounds.boundingVolume.Min + (roomBounds.boundingVolume.Extents * 0.2f), roomBounds.boundingVolume.Max - (roomBounds.boundingVolume.Extents * 0.2f));
+            position = new Vector3(position.x, 0f, position.z);
             quaternion rotation = quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
             GameObject.Instantiate(go, position, rotation, roomBounds.parent);
         }
@@ -87,6 +89,7 @@ namespace ProcGen
 			mango.tag = "Furniture";
 
             Vector3 manPosition = random.NextFloat3(roomBounds.boundingVolume.Min + (roomBounds.boundingVolume.Extents * 0.2f), roomBounds.boundingVolume.Max - (roomBounds.boundingVolume.Extents * 0.2f));
+            manPosition = new Vector3(manPosition.x, 0f, manPosition.z);
             quaternion manRotation = quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
             GameObject.Instantiate(mango, manPosition, manRotation, roomBounds.parent);
 
@@ -97,6 +100,7 @@ namespace ProcGen
                 go.tag = "Furniture";
 
                 Vector3 position = random.NextFloat3(roomBounds.boundingVolume.Min + (roomBounds.boundingVolume.Extents * 0.2f), roomBounds.boundingVolume.Max - (roomBounds.boundingVolume.Extents * 0.2f));
+                position = new Vector3(position.x, 0f, position.z);
                 quaternion rotation = quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
                 GameObject.Instantiate(go, position, rotation, roomBounds.parent);
             }
@@ -109,6 +113,7 @@ namespace ProcGen
             mango.tag = "Furniture";
 
             Vector3 manPosition = random.NextFloat3(roomBounds.boundingVolume.Min + (roomBounds.boundingVolume.Extents * 0.2f), roomBounds.boundingVolume.Max - (roomBounds.boundingVolume.Extents * 0.2f));
+            manPosition = new Vector3(manPosition.x, 0f, manPosition.z);
             quaternion manRotation = quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
             GameObject.Instantiate(mango, manPosition, manRotation, roomBounds.parent);
 
@@ -119,6 +124,7 @@ namespace ProcGen
                 go.tag = "Furniture";
 
                 Vector3 position = random.NextFloat3(roomBounds.boundingVolume.Min + (roomBounds.boundingVolume.Extents * 0.2f), roomBounds.boundingVolume.Max - (roomBounds.boundingVolume.Extents * 0.2f));
+                position = new Vector3(position.x, 0f, position.z);
                 quaternion rotation = quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
                 GameObject.Instantiate(go, position, rotation, roomBounds.parent);
             }
@@ -130,6 +136,7 @@ namespace ProcGen
             go.tag = "Furniture";
 
             Vector3 position = random.NextFloat3(roomBounds.boundingVolume.Min + (roomBounds.boundingVolume.Extents * 0.2f), roomBounds.boundingVolume.Max - (roomBounds.boundingVolume.Extents * 0.2f));
+            position = new Vector3(position.x, 0f, position.z);
             quaternion rotation = quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
             GameObject.Instantiate(go, position, rotation, roomBounds.parent);
         }
@@ -140,6 +147,7 @@ namespace ProcGen
             go.tag = "Furniture";
 
             Vector3 position = random.NextFloat3(roomBounds.boundingVolume.Min + (roomBounds.boundingVolume.Extents * 0.2f), roomBounds.boundingVolume.Max - (roomBounds.boundingVolume.Extents * 0.2f));
+            position = new Vector3(position.x, 0f, position.z);
             quaternion rotation = quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
             GameObject.Instantiate(go, position, rotation, roomBounds.parent);
         }
