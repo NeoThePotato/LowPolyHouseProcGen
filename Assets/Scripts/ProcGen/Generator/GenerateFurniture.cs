@@ -51,6 +51,21 @@ namespace ProcGen
                         Debug.Log("ExitRoom");
                         break;
 
+                    case RoomType.EnemyRoom:
+                        PlaceEnemyRoomObjects(room.Value, input.assets.Furniture, ref random);
+                        Debug.Log("ExitRoom");
+                        break;
+
+                    case RoomType.PuzzleRoom:
+                        PlacePuzzleRoomObjects(room.Value, input.assets.Furniture, ref random);
+                        Debug.Log("ExitRoom");
+                        break;
+
+                    case RoomType.TreasureRoom:
+                        PlaceTreasureRoomObjects(room.Value, input.assets.Furniture, ref random);
+                        Debug.Log("ExitRoom");
+                        break;
+
                     case RoomType.None:
                        GenerateFurniture(room.Value, input.assets.Furniture, ref random);
                         Debug.Log("NoneRoom");
@@ -144,6 +159,39 @@ namespace ProcGen
         public static void PlaceExitRoomObjects(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random)
         {
             GameObject go = assets.ExitRoomObjects[random.NextInt(0, assets.ExitRoomObjects.Count)];
+            go.tag = "Furniture";
+
+            Vector3 position = random.NextFloat3(roomBounds.boundingVolume.Min + (roomBounds.boundingVolume.Extents * 0.2f), roomBounds.boundingVolume.Max - (roomBounds.boundingVolume.Extents * 0.2f));
+            position = new Vector3(position.x, 0f, position.z);
+            quaternion rotation = quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
+            GameObject.Instantiate(go, position, rotation, roomBounds.parent);
+        }
+        //TODO
+        public static void PlaceEnemyRoomObjects(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random)
+        {
+            GameObject go = assets.EnemyRoomObjects[random.NextInt(0, assets.EnemyRoomObjects.Count)];
+            go.tag = "Furniture";
+
+            Vector3 position = random.NextFloat3(roomBounds.boundingVolume.Min + (roomBounds.boundingVolume.Extents * 0.2f), roomBounds.boundingVolume.Max - (roomBounds.boundingVolume.Extents * 0.2f));
+            position = new Vector3(position.x, 0f, position.z);
+            quaternion rotation = quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
+            GameObject.Instantiate(go, position, rotation, roomBounds.parent);
+        }
+
+        public static void PlacePuzzleRoomObjects(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random)
+        {
+            GameObject go = assets.PuzzleRoomObjects[random.NextInt(0, assets.PuzzleRoomObjects.Count)];
+            go.tag = "Furniture";
+
+            Vector3 position = random.NextFloat3(roomBounds.boundingVolume.Min + (roomBounds.boundingVolume.Extents * 0.2f), roomBounds.boundingVolume.Max - (roomBounds.boundingVolume.Extents * 0.2f));
+            position = new Vector3(position.x, 0f, position.z);
+            quaternion rotation = quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
+            GameObject.Instantiate(go, position, rotation, roomBounds.parent);
+        }
+
+        public static void PlaceTreasureRoomObjects(in RoomData roomBounds, IReadOnlyList<GameObject> furniture, ref random random)
+        {
+            GameObject go = assets.TreasureRoomObjects[random.NextInt(0, assets.TreasureRoomObjects.Count)];
             go.tag = "Furniture";
 
             Vector3 position = random.NextFloat3(roomBounds.boundingVolume.Min + (roomBounds.boundingVolume.Extents * 0.2f), roomBounds.boundingVolume.Max - (roomBounds.boundingVolume.Extents * 0.2f));

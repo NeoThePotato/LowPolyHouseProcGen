@@ -23,6 +23,13 @@ namespace ProcGen
         [SerializeField] private GameObject[] _entranceRoomObjects;
         [Header("ExitRoomObjects")]
         [SerializeField] private GameObject[] _exitRoomObjects;
+        [Header("EnemyRoomObjects")]
+        [SerializeField] private GameObject[] _enemyRoomObjects;
+        [Header("PuzzleRoomObjects")]
+        [SerializeField] private GameObject[] _puzzleRoomObjects;
+        [Header("TreasureRoomObjects")]
+        [SerializeField] private GameObject[] _treasureRoomObjects;
+
 
         public IReadOnlyList<GameObject> Walls => _walls;
 		public IReadOnlyList<GameObject> Doors => _doors;
@@ -34,5 +41,8 @@ namespace ProcGen
 		public IReadOnlyList<GameObject> LockedRoomObjects => _lockedRoomObjects;
         public IReadOnlyList<GameObject> EntranceRoomObjects => _entranceRoomObjects;
         public IReadOnlyList<GameObject> ExitRoomObjects => _exitRoomObjects;
+        public IReadOnlyList<GameObject> EnemyRoomObjects => _enemyRoomObjects;
+        public IReadOnlyList<GameObject> PuzzleRoomObjects => _puzzleRoomObjects;
+        public IReadOnlyList<GameObject> TreasureRoomObjects => _treasureRoomObjects;
     }
 }
