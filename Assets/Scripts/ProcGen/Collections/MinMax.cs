@@ -3,6 +3,7 @@ using Unity.Mathematics.Geometry;
 
 namespace ProcGen.Collections
 {
+	[System.Serializable]
 	public struct MinMax
 	{
 		public float min, max;
@@ -20,6 +21,25 @@ namespace ProcGen.Collections
 		public static implicit operator MinMax(float2 value) => new(value.x, value.y);
 	}
 
+	[System.Serializable]
+	public struct MinMaxInt
+	{
+		public int min, max;
+
+		public readonly int Range => max - min;
+
+		public MinMaxInt(int min, int max)
+		{
+			this.min = min;
+			this.max = max;
+		}
+
+		public static implicit operator int2(MinMaxInt minMax) => new(minMax.min, minMax.max);
+
+		public static implicit operator MinMaxInt(int2 value) => new(value.x, value.y);
+	}
+
+	[System.Serializable]
 	public struct MinMax2
 	{
 		public float2 min, max;
@@ -43,6 +63,8 @@ namespace ProcGen.Collections
 	{
 		public static float Random(this ref Random random, MinMax range) => random.NextFloat(range.min, range.max);
 		
+		public static int Random(this ref Random random, MinMaxInt range) => random.NextInt(range.min, range.max);
+
 		public static float2 Random(this ref Random random, in MinMax2 range) => random.NextFloat2(range.min, range.max);
 
 		public static MinMax2 MinMaxXY(this in MinMaxAABB aabb) => aabb;

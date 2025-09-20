@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
 using random = Unity.Mathematics.Random;
+using Extensions;
 using ProcGen.Collections;
 
 namespace ProcGen
@@ -10,13 +12,19 @@ namespace ProcGen
 	{
 		public static void ConnectRooms(in Input input, ref random random, INode<RoomData> tree)
 		{
-			var rooms = tree.Leaves().Select(n => n.Value).ToArray();
-			for (int i = 0; i < rooms.Length; i++)
+			var allRooms = tree.Leaves().Select(n => n.Value).ToArray();
+			HashSet<RoomData> connectedRooms = new();
+			for (int i = 0; i < allRooms.Length; i++)
+				ConnectRoom(allRooms[i], ref random, input.connectionSize);
+
+			void ConnectRoom(RoomData room, ref random random, float2 connectionSize)
 			{
-				for (int j = i+1; j < rooms.Length; j++)
+				connectedRooms.Add(room);
+				var availableConnections = allRooms.Except(connectedRooms).Where(r => CanConnect(in room.boundingVolume, in r.boundingVolume, in connectionSize, out _)).ToArray();
+				foreach (var toConnect in availableConnections)
 				{
-					if (CanConnect(in rooms[i].boundingVolume, in rooms[j].boundingVolume, in input.connectionSize, out _))
-						Connect(rooms[i], rooms[j]);
+					Connect(room, toConnect);
+					connectedRooms.Add(toConnect);
 				}
 			}
 		}
@@ -45,6 +53,17 @@ namespace ProcGen
 		{
 			room1.connections.Add(room2);
 			room2.connections.Add(room1);
+		}
+
+		public static void Disconnect(RoomData room1, RoomData room2)
+		{
+			room1.connections.Remove(room2);
+			room2.connections.Remove(room1);
+		}
+
+		public static bool Connected(RoomData room1, RoomData room2)
+		{
+			return room1.connections.Contains(room2) && room2.connections.Contains(room1);
 		}
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Unity.Mathematics;
+using random = Unity.Mathematics.Random;
 using Unity.Collections;
 
 namespace Extensions
@@ -14,8 +15,12 @@ namespace Extensions
 		public static T GetRandom<T>(this IReadOnlyList<T> source) => source[UnityEngine.Random.Range(0, source.Count)];
 
 		public static T GetRandom<T>(this IEnumerable<T> source) => source.ElementAt(UnityEngine.Random.Range(0, source.Count()));
-		
+
+		public static T GetRandom<T>(this IEnumerable<T> source, ref random random) => source.ElementAt(random.NextInt(0, source.Count()));
+
 		public static T GetRandomOrDefault<T>(this IEnumerable<T> source) => source.ElementAtOrDefault(UnityEngine.Random.Range(0, source.Count()));
+
+		public static T GetRandomOrDefault<T>(this IEnumerable<T> source, ref random random) => source.ElementAtOrDefault(random.NextInt(0, source.Count()));
 
 		public static bool RandomInt(int numerator, int denominator)
 		{

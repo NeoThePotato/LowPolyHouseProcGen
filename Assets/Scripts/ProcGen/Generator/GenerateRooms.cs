@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Unity.Mathematics.Geometry;
 using random = Unity.Mathematics.Random;
-using System.Collections.Generic;
 using ProcGen.Collections;
 
 namespace ProcGen
@@ -19,7 +19,7 @@ namespace ProcGen
 		{
 			public readonly MinMaxAABB boundingVolume;
 			public readonly Transform parent;
-			public List<RoomData> connections;
+			public HashSet<RoomData> connections;
 			public RoomType roomType = RoomType.None;
 
 			public RoomData(in MinMaxAABB boundingVolume, Transform parent)

@@ -13,7 +13,7 @@ namespace ProcGen
 			GenerateRooms(in input, ref random, out rooms);
 			ConnectRooms(in input, ref random, rooms);
 			var updatedRooms =  GenerateQuests(ref random, rooms);
-			GenerateFurniture(in input, ref random, updatedRooms.Leaves()) ;
+			GenerateFurniture(in input, ref random, updatedRooms.Leaves());
 			return rooms.Value.parent.gameObject;
 		}
 
