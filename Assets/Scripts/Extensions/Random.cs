@@ -22,6 +22,15 @@ namespace Extensions
 
 		public static T GetRandomOrDefault<T>(this IEnumerable<T> source, ref random random) => source.ElementAtOrDefault(random.NextInt(0, source.Count()));
 
+		public static void Shuffle<T>(this IList<T> source, ref random random)
+		{
+			for (int i = 0; i < source.Count; i++)
+			{
+				var swap = random.NextInt(source.Count);
+				(source[i], source[swap]) = (source[swap], source[i]);
+			}
+		}
+
 		public static bool RandomInt(int numerator, int denominator)
 		{
 			var rand = UnityEngine.Random.Range(0, numerator);
