@@ -1039,14 +1039,14 @@ MonoBehaviour:
   - {fileID: 5221699130912852455, guid: 6ebdb4e660fc1264da35698bf69a1890, type: 3}
   - {fileID: 5221699130912852455, guid: 92f5d241a06df7c4a9afdef19e52dc94, type: 3}
   _enemyRoomObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 5221699130912852455, guid: c9c6541fa7e5c7b4cba22187e60625d7, type: 3}
+  - {fileID: 5221699130912852455, guid: c06c38afbb823404c867c794a15414b0, type: 3}
+  - {fileID: 5221699130912852455, guid: 3bd384b656b979c448da14c667a679e6, type: 3}
   _puzzleRoomObjects:
   - {fileID: 2422713507370130997, guid: c80b5a4fb2239914b8054270902140de, type: 3}
   - {fileID: 2422713507370130997, guid: fd421b3a79b8e104bae9637b2cb28007, type: 3}
   - {fileID: 2422713507370130997, guid: 91bcc7b25c451444aa09f571e9e8361a, type: 3}
   _treasureRoomObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 5221699130912852455, guid: 02ae0f132dd49754fb2d655e42dfb530, type: 3}
+  - {fileID: 5221699130912852455, guid: 91f169d8c9d818143852a5ddc6b3b1c0, type: 3}
+  - {fileID: 5221699130912852455, guid: 39737a0a882bbea488ed4a995dd729a1, type: 3}
