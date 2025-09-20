@@ -34,7 +34,7 @@ namespace ProcGen
             var lockedRoom = GetRandomRoomExcept(root, new List<INode<RoomData>> {lastRoom}, ref random);
             lockedRoom.Value.roomType = RoomType.LockedRoom;
             var parents = GetAllParents(lockedRoom, root);
-            var keyRoom = parents[random.NextInt(0, parents.Count-1)];
+            var keyRoom = parents[random.NextInt(1, parents.Count-1)];
             UnityEngine.Debug.Assert(keyRoom.IsLeaf());
             keyRoom.Value.roomType = RoomType.KeyRoom;
 
@@ -61,17 +61,16 @@ namespace ProcGen
             return null;
         }
 
-        public static bool CheckParentAmountSafe(INode<RoomData> room, INode<RoomData> root)
-        {
-            var parent = room.Parent(root);
-            var grandParent = parent.Parent(root);
-            return grandParent != null;
-        }
-
         public static List<INode<RoomData>> GetAllParents(INode<RoomData> target, INode<RoomData> root)
         {
-           return root.Leaves().TakeUntil(n => n == target).ToList();
+            return root.Leaves().TakeUntil(n => n == target).ToList();
 
+        }
+
+        public static bool CheckParentAmountSafe(INode<RoomData> room, INode<RoomData> root)
+        {
+            var parentList = GetAllParents(room, root);
+            return parentList.Count >= 2;
         }
 
         public static INode<RoomData> GetLastInTree(INode<RoomData> root)
