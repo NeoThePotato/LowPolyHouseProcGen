@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using Unity.Mathematics.Geometry;
@@ -28,13 +29,31 @@ namespace ProcGen
 
 		private void OnDrawGizmosSelected()
 		{
-			Handles.color = Color.blue;
-			Handles.DrawWireCube(_boundingVolume.Center, _boundingVolume.Extents);
-			if (_rooms == null)
-				return;
-			Handles.color = Color.red;
-			foreach (var room in _rooms)
-				Handles.DrawWireCube(room.Value.boundingVolume.Center, room.Value.boundingVolume.Extents);
+			DrawRooms();
+			DrawConnections();
+
+			void DrawRooms()
+			{
+				Handles.color = Color.blue;
+				Handles.DrawWireCube(_boundingVolume.Center, _boundingVolume.Extents);
+				if (_rooms == null)
+					return;
+				Handles.color = Color.red;
+				foreach (var room in _rooms)
+					Handles.DrawWireCube(room.Value.boundingVolume.Center, room.Value.boundingVolume.Extents);
+			}
+
+			void DrawConnections()
+			{
+				Handles.color = Color.blue;
+				foreach (var room in _rooms.Leaves().Select(n => n.Value))
+				{
+					foreach (var connection in room.connections)
+					{
+						Handles.DrawLine(room.boundingVolume.Center, connection.boundingVolume.Center);
+					}
+				}
+			}
 		}
 
 		private random GetRandom(out uint seed)
