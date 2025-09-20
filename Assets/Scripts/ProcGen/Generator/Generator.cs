@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
 using random = Unity.Mathematics.Random;
 using ProcGen.Collections;
@@ -10,7 +11,7 @@ namespace ProcGen
 		public static GameObject Generate(in Input input, random random, out INode<RoomData> rooms)
 		{
 			GenerateRooms(in input, ref random, out rooms);
-			ConnectRooms(ref random, rooms);
+			ConnectRooms(in input, ref random, rooms);
 			var updatedRooms =  GenerateQuests(ref random, rooms);
 			GenerateFurniture(in input, ref random, updatedRooms.Leaves()) ;
 			return rooms.Value.parent.gameObject;
@@ -21,12 +22,14 @@ namespace ProcGen
 			public readonly AssetsCollection assets;
 			public readonly MinMaxAABB boundingVolume;
 			public readonly MinMaxAABB roomSize;
+			public readonly float2 connectionSize;
 
-			public Input(AssetsCollection assets, MinMaxAABB boundingVolume, MinMaxAABB roomSize)
+			public Input(AssetsCollection assets, MinMaxAABB boundingVolume, MinMaxAABB roomSize, float2 connectionSize)
 			{
 				this.assets = assets;
 				this.boundingVolume = boundingVolume;
 				this.roomSize = roomSize;
+				this.connectionSize = connectionSize;
 			}
 		}
 	}

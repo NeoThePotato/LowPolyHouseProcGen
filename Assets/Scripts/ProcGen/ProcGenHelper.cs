@@ -1,6 +1,7 @@
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
 using random = Unity.Mathematics.Random;
 using ProcGen.Collections;
@@ -13,6 +14,7 @@ namespace ProcGen
 		[SerializeField] private Transform _parent;
 		[SerializeField] private MinMaxAABB _boundingVolume = new(-1f, 1f);
 		[SerializeField] private MinMaxAABB _roomSize;
+		[SerializeField] private float2 _connectionSize;
 		[SerializeField, Tooltip("Set to 0 to randomly generate a seed.")] private uint _seed;
 		private INode<Generator.RoomData> _rooms;
 
@@ -20,7 +22,7 @@ namespace ProcGen
 		public void Generate()
 		{
 			RemoveOldGeneration();
-			var house = Generator.Generate(new(_assets, _boundingVolume, _roomSize), GetRandom(out var seed), out _rooms);
+			var house = Generator.Generate(new(_assets, _boundingVolume, _roomSize, _connectionSize), GetRandom(out var seed), out _rooms);
 			if (!house)
 				return;
 			house.transform.SetParent(_parent);
@@ -29,6 +31,8 @@ namespace ProcGen
 
 		private void OnDrawGizmosSelected()
 		{
+			if (_rooms == null)
+				return;
 			DrawRooms();
 			DrawConnections();
 
@@ -66,7 +70,7 @@ namespace ProcGen
         [ContextMenu("RemoveOldGen")]
         private void RemoveOldGeneration()
 		{
-			if (_rooms == null)
+			if (_rooms == null || !_rooms.Value.parent)
 				return;
 			DestroyImmediate(_rooms.Value.parent.gameObject);
 			_rooms = null;
