@@ -26,7 +26,7 @@ namespace ProcGen
 
 		private static Mesh CreateMesh(RoomData room)
 		{
-			const int FLOOR = 0, WALLS = 1, CEILING = 2;
+			const int FLOOR = 0, CEILING = 1, WALLS = 2;
 
 			var volume = room.boundingVolume;
 			CenterBounds(ref volume);
@@ -35,8 +35,11 @@ namespace ProcGen
 			List<int> quads = new();
 
 			var floor = CreateFloor(in volume, vertices, quads);
+			var ceiling = CreateCeiling(in volume, vertices, quads);
+			mesh.subMeshCount = 2;
 			mesh.SetVertices(vertices);
-			mesh.SetIndices(topology: MeshTopology.Quads, indices: quads, submesh: FLOOR, indicesStart: floor.indexStart, indicesLength: floor.indexCount);
+			mesh.SetIndices(quads, floor.indexStart, floor.indexCount, MeshTopology.Quads, FLOOR, true);
+			mesh.SetIndices(quads, ceiling.indexStart, ceiling.indexCount, MeshTopology.Quads, CEILING, true);
 			mesh.RecalculateBounds();
 			mesh.RecalculateNormals();
 			return mesh;
@@ -60,6 +63,26 @@ namespace ProcGen
 			quads.Add(floor.indexStart + 2);
 			quads.Add(floor.indexStart + 3);
 			return floor;
+		}
+
+		private static SubMeshDescriptor CreateCeiling(in MinMaxAABB bounds, List<Vector3> vertices, List<int> quads)
+		{
+			SubMeshDescriptor ceiling = new(indexStart: vertices.Count, indexCount: 4, topology: MeshTopology.Quads);
+			float
+				y = bounds.Max.y,
+				left = bounds.Min.x,
+				right = bounds.Max.x,
+				bottom = bounds.Min.z,
+				top = bounds.Max.z;
+			vertices.Add(new(left, y, bottom));
+			vertices.Add(new(left, y, top));
+			vertices.Add(new(right, y, top));
+			vertices.Add(new(right, y, bottom));
+			quads.Add(ceiling.indexStart);
+			quads.Add(ceiling.indexStart + 3);
+			quads.Add(ceiling.indexStart + 2);
+			quads.Add(ceiling.indexStart + 1);
+			return ceiling;
 		}
 
 		private static void CenterBounds(ref MinMaxAABB bounds)
