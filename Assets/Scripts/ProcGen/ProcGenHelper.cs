@@ -14,7 +14,7 @@ namespace ProcGen
 		[SerializeField] private Transform _parent;
 		[SerializeField] private MinMaxAABB _boundingVolume = new(-1f, 1f);
 		[SerializeField] private MinMaxAABB _roomSize;
-		[SerializeField] private float2 _connectionSize;
+		[SerializeField] private float3 _connectionSize;
 		[SerializeField, Tooltip("Set to 0 to randomly generate a seed.")] private uint _seed;
 		private INode<Generator.RoomData> _rooms;
 

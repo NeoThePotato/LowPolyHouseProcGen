@@ -15,7 +15,7 @@ namespace ProcGen
 			var allRooms = tree.Leaves().Select(n => n.Value).ToArray();
 			HashSet<RoomData> connectedRooms = new();
 			for (int i = 0; i < allRooms.Length; i++)
-				ConnectRoom(allRooms[i], ref random, input.connectionSize);
+				ConnectRoom(allRooms[i], ref random, input.connectionSize.xy);
 
 			void ConnectRoom(RoomData room, ref random random, float2 connectionSize)
 			{

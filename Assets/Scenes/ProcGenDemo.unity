@@ -478,6 +478,7 @@ MonoBehaviour:
   _connectionSize:
     x: 3
     y: 1
+    z: 0.1
   _seed: 0
 --- !u!4 &1497775666
 Transform:

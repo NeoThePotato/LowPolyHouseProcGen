@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
 using random = Unity.Mathematics.Random;
 using ProcGen.Collections;
-using System.Linq;
 
 namespace ProcGen
 {
@@ -13,6 +13,7 @@ namespace ProcGen
 		{
 			GenerateRooms(in input, ref random, out rooms);
 			ConnectRooms(in input, ref random, rooms);
+			ShrinkRooms(in input, rooms.Leaves().Select(n => n.Value));
 			CreateRoomMeshes(in input, ref random, rooms.Leaves().Select(n => n.Value));
 			var updatedRooms =  GenerateQuests(ref random, rooms);
 			GenerateFurniture(in input, ref random, updatedRooms.Leaves());
@@ -24,9 +25,9 @@ namespace ProcGen
 			public readonly AssetsCollection assets;
 			public readonly MinMaxAABB boundingVolume;
 			public readonly MinMaxAABB roomSize;
-			public readonly float2 connectionSize;
+			public readonly float3 connectionSize;
 
-			public Input(AssetsCollection assets, MinMaxAABB boundingVolume, MinMaxAABB roomSize, float2 connectionSize)
+			public Input(AssetsCollection assets, MinMaxAABB boundingVolume, MinMaxAABB roomSize, float3 connectionSize)
 			{
 				this.assets = assets;
 				this.boundingVolume = boundingVolume;

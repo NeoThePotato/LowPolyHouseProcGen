@@ -16,7 +16,7 @@ namespace ProcGen
 
 		public class RoomData
 		{
-			public readonly MinMaxAABB boundingVolume;
+			public MinMaxAABB boundingVolume;
 			public readonly Transform parent;
 			public HashSet<RoomData> connections;
 			public RoomType roomType = RoomType.None;
