@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using Unity.Mathematics;
+using Unity.Mathematics.Geometry;
 using Unity.Burst;
 
 namespace Extensions
@@ -280,6 +281,11 @@ namespace Extensions
 		public static float3 FarthestPoint(this in Bounds bounds, in float3 point)
 		{
 			return math.select(bounds.max, bounds.min, point > bounds.center);
+		}
+
+		public static float3 GetCenterRoot(in MinMaxAABB bounds)
+		{
+			return new(bounds.Center.x, bounds.Min.y, bounds.Center.z);
 		}
 	}
 }

@@ -3,6 +3,7 @@ using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
 using random = Unity.Mathematics.Random;
 using ProcGen.Collections;
+using EMath = Extensions.Math;
 
 namespace ProcGen
 {
@@ -62,6 +63,7 @@ namespace ProcGen
 			{
 				var child = new GameObject(name).transform;
 				child.SetParent(parent);
+				child.position = EMath.GetCenterRoot(bounds);
 				return new()
 				{
 					Value = new(bounds, child)
