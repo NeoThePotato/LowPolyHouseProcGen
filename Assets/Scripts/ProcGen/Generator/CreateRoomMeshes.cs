@@ -1,14 +1,22 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Rendering;
 using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
 using random = Unity.Mathematics.Random;
+using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace ProcGen
 {
 	public static partial class Generator
 	{
+		const int FLOOR = 0, CEILING = 1, WALLS = 2, SUBMESH_COUNT = 3;
+
+		static readonly int[]
+			LEFT = { 0, 4, 5, 1 },
+			UP = { 1, 5, 6, 2 },
+			RIGHT = { 2, 6, 7, 3 },
+			DOWN = { 3, 7, 4, 0 };
+
 		public static void CreateRoomMeshes(in Input input, ref random random, IEnumerable<RoomData> rooms)
 		{
 			foreach (var room in rooms)
@@ -17,17 +25,15 @@ namespace ProcGen
 
 		private static MeshFilter CreateAndAssignMesh(RoomData room)
 		{
-			var mesh = CreateMesh(room);
 			var meshFilter = room.parent.gameObject.AddComponent<MeshFilter>();
-			room.parent.gameObject.AddComponent<MeshRenderer>();
-			meshFilter.mesh = mesh;
+			var mesh = meshFilter.mesh = CreateMesh(room);
+			var renderer = room.parent.gameObject.AddComponent<MeshRenderer>(); // TODO Move this to another generator step (I.E Assign Materials)
+			renderer.materials = new Material[mesh.subMeshCount];
 			return meshFilter;
 		}
 
 		private static Mesh CreateMesh(RoomData room)
 		{
-			const int FLOOR = 0, CEILING = 1, WALLS = 2;
-
 			var volume = room.boundingVolume;
 			CenterBounds(ref volume);
 			Mesh mesh = new();
@@ -36,10 +42,12 @@ namespace ProcGen
 
 			var floor = CreateFloor(in volume, vertices, quads);
 			var ceiling = CreateCeiling(in volume, vertices, quads);
-			mesh.subMeshCount = 2;
+			var walls = CreateWalls(vertices, quads);
+			mesh.subMeshCount = SUBMESH_COUNT;
 			mesh.SetVertices(vertices);
 			mesh.SetIndices(quads, floor.indexStart, floor.indexCount, MeshTopology.Quads, FLOOR, true);
 			mesh.SetIndices(quads, ceiling.indexStart, ceiling.indexCount, MeshTopology.Quads, CEILING, true);
+			mesh.SetIndices(quads, walls.indexStart, walls.indexCount, MeshTopology.Quads, WALLS, true);
 			mesh.RecalculateBounds();
 			mesh.RecalculateNormals();
 			return mesh;
@@ -83,6 +91,16 @@ namespace ProcGen
 			quads.Add(ceiling.indexStart + 2);
 			quads.Add(ceiling.indexStart + 1);
 			return ceiling;
+		}
+
+		private static SubMeshDescriptor CreateWalls(List<Vector3> vertices, List<int> quads)
+		{
+			SubMeshDescriptor walls = new(indexStart: vertices.Count, indexCount: 4*4, topology: MeshTopology.Quads);
+			quads.AddRange(LEFT);
+			quads.AddRange(UP);
+			quads.AddRange(RIGHT);
+			quads.AddRange(DOWN);
+			return walls;
 		}
 
 		private static void CenterBounds(ref MinMaxAABB bounds)
