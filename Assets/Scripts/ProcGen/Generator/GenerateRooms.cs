@@ -10,9 +10,8 @@ namespace ProcGen
 	{
 		public static void GenerateRooms(in Input input, ref random random, out INode<RoomData> rooms)
 		{
-			BinaryTree<RoomData> tree = new(new(input.boundingVolume, new GameObject().transform));
-			BSP.SplitRecursive(in input, ref random, tree);
-			rooms = tree.Root;
+			rooms = new BinaryTree<RoomData>(new(input.boundingVolume, new GameObject().transform));
+			BSP.SplitRecursive(in input, ref random, rooms);
 		}
 
 		public class RoomData
