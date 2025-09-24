@@ -45,14 +45,20 @@ namespace ProcGen
 		private static SubMeshDescriptor CreateFloor(in MinMaxAABB bounds, List<Vector3> vertices, List<int> quads)
 		{
 			SubMeshDescriptor floor = new(indexStart: vertices.Count, indexCount: 4, topology: MeshTopology.Quads);
-			vertices.Add(bounds.Min);
-			vertices.Add(new float3(xy: bounds.Min.xy, z: bounds.Max.z));
-			vertices.Add(new float3(x: bounds.Max.x, y: bounds.Min.y, z: bounds.Max.z));
-			vertices.Add(new float3(x: bounds.Max.x, yz: bounds.Min.yz));
+			float
+				y = bounds.Min.y,
+				left = bounds.Min.x,
+				right = bounds.Max.x,
+				bottom = bounds.Min.z,
+				top = bounds.Max.z;
+			vertices.Add(new(left, y, bottom));
+			vertices.Add(new(left, y, top));
+			vertices.Add(new(right, y, top));
+			vertices.Add(new(right, y, bottom));
 			quads.Add(floor.indexStart);
-			quads.Add(floor.indexStart+1);
-			quads.Add(floor.indexStart+2);
-			quads.Add(floor.indexStart+3);
+			quads.Add(floor.indexStart + 1);
+			quads.Add(floor.indexStart + 2);
+			quads.Add(floor.indexStart + 3);
 			return floor;
 		}
 
