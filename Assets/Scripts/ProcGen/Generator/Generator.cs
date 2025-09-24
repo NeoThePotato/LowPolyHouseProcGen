@@ -3,6 +3,7 @@ using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
 using random = Unity.Mathematics.Random;
 using ProcGen.Collections;
+using System.Linq;
 
 namespace ProcGen
 {
@@ -12,6 +13,7 @@ namespace ProcGen
 		{
 			GenerateRooms(in input, ref random, out rooms);
 			ConnectRooms(in input, ref random, rooms);
+			CreateRoomMeshes(in input, ref random, rooms.Leaves().Select(n => n.Value));
 			var updatedRooms =  GenerateQuests(ref random, rooms);
 			GenerateFurniture(in input, ref random, updatedRooms.Leaves());
 			return rooms.Value.parent.gameObject;
