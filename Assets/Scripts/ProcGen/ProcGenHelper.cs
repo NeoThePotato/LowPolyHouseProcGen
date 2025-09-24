@@ -31,17 +31,20 @@ namespace ProcGen
 
 		private void OnDrawGizmosSelected()
 		{
+			DrawBoundingVolume();
 			if (_rooms == null)
 				return;
 			DrawRooms();
 			DrawConnections();
 
-			void DrawRooms()
+			void DrawBoundingVolume()
 			{
 				Handles.color = Color.blue;
 				Handles.DrawWireCube(_boundingVolume.Center, _boundingVolume.Extents);
-				if (_rooms == null)
-					return;
+			}
+
+			void DrawRooms()
+			{
 				Handles.color = Color.red;
 				foreach (var room in _rooms)
 					Handles.DrawWireCube(room.Value.boundingVolume.Center, room.Value.boundingVolume.Extents);
@@ -50,13 +53,9 @@ namespace ProcGen
 			void DrawConnections()
 			{
 				Handles.color = Color.blue;
-				foreach (var room in _rooms.Leaves().Select(n => n.Value))
-				{
-					foreach (var connection in room.connections)
-					{
-						Handles.DrawLine(room.boundingVolume.Center, connection.boundingVolume.Center);
-					}
-				}
+				var connections = _rooms.Leaves().SelectMany(n => n.Value.connections).Distinct();
+				foreach (var connection in connections)
+					Handles.DrawLine(connection.room1.boundingVolume.Center, connection.room2.boundingVolume.Center);
 			}
 		}
 

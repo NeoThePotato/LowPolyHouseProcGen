@@ -3,6 +3,7 @@ using UnityEngine;
 using Unity.Mathematics.Geometry;
 using random = Unity.Mathematics.Random;
 using ProcGen.Collections;
+using System;
 
 namespace ProcGen
 {
@@ -18,7 +19,7 @@ namespace ProcGen
 		{
 			public MinMaxAABB boundingVolume;
 			public readonly Transform parent;
-			public HashSet<RoomData> connections;
+			public HashSet<Connection> connections;
 			public RoomType roomType = RoomType.None;
 
 			public RoomData(in MinMaxAABB boundingVolume, Transform parent)
@@ -31,6 +32,20 @@ namespace ProcGen
 			public static implicit operator MinMaxAABB(in RoomData roomData) => roomData.boundingVolume;
 
 			public static implicit operator Transform(in RoomData roomData) => roomData.parent;
+
+			public struct Connection : IEquatable<Connection>
+			{
+				public RoomData room1, room2;
+				public MinMaxAABB volume;
+
+				public readonly bool Equals(Connection other)
+				{
+					return
+						(room1 == other.room1 && room2 == other.room2)
+						||
+						(room1 == other.room2 && room2 == other.room1);
+				}
+			}
 		}
 	}
 }

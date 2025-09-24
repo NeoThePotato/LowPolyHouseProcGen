@@ -31,7 +31,7 @@ namespace ProcGen
 
 		public static bool CanConnect(in MinMaxAABB boundingVolume1, in MinMaxAABB boundingVolume2, in float2 connectionSize, out MinMaxAABB border)
 		{
-			if (HasSharedBorder(in  boundingVolume1, in boundingVolume2, out border) && border.Extents.y >= connectionSize.y && math.any(border.Extents.xz >= connectionSize.x))
+			if (HasSharedBorder(in boundingVolume1, in boundingVolume2, out border) && border.Extents.y >= connectionSize.y && math.any(border.Extents.xz >= connectionSize.x))
 				return true;
 			return false;
 		}
@@ -51,19 +51,10 @@ namespace ProcGen
 
 		public static void Connect(RoomData room1, RoomData room2)
 		{
-			room1.connections.Add(room2);
-			room2.connections.Add(room1);
-		}
-
-		public static void Disconnect(RoomData room1, RoomData room2)
-		{
-			room1.connections.Remove(room2);
-			room2.connections.Remove(room1);
-		}
-
-		public static bool Connected(RoomData room1, RoomData room2)
-		{
-			return room1.connections.Contains(room2) && room2.connections.Contains(room1);
+			RoomData.Connection connection = new() { room1 = room1, room2 = room2 };
+			HasSharedBorder(room1.boundingVolume, room2.boundingVolume, out connection.volume);
+			room1.connections.Add(connection);
+			room2.connections.Add(connection);
 		}
 	}
 }
