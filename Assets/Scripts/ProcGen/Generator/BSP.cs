@@ -22,7 +22,7 @@ namespace ProcGen
 
 			public static bool TrySplitSingle(in Input input, ref random random, INode<RoomData> toSplit)
 			{
-				const string LEFT = "left", RIGHT = "Right", DOWN = "Down", UP = "UP";
+				const string LEFT = "Left", RIGHT = "Right", DOWN = "Down", UP = "Up";
 
 				var roomToSplit = toSplit.Value;
 				ref readonly var boundingVolume = ref roomToSplit.boundingVolume;
