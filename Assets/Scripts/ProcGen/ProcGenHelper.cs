@@ -28,6 +28,11 @@ namespace ProcGen
 			DrawBoundingVolume();
 			if (_rooms == null)
 				return;
+			if (!_rooms.Value.parent)
+			{
+				_rooms = null;
+				return;
+			}
 			DrawRooms();
 			DrawConnections();
 
