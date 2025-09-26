@@ -21,7 +21,9 @@ namespace ProcGen
 
         public static void PlaceGrammarFurniture(in Input input, in RoomData room, ref random random)
         {
-            var assets = input.assets;
+            const string FURNITURE_TAG = "Furniture";
+
+			var assets = input.assets;
             var roomType = room.roomType;
 
 			const int objectCount = 5;
@@ -86,14 +88,14 @@ namespace ProcGen
                 var cell = validCells[random.NextInt(0, validCells.Count)];
                 grid[cell.x, cell.z] = true;
 
-                Vector3 position = new Vector3(
+                Vector3 position = new(
                     min.x + (cell.x + 0.5f) * cellWidth,
-                    0f,
+					room.boundingVolume.Min.y,
                     min.z + (cell.z + 0.5f) * cellDepth
                 );
 
                 GameObject go = assets.Furniture[random.NextInt(0, assets.Furniture.Count)];
-                go.tag = "Furniture";
+                go.tag = FURNITURE_TAG;
 
                 switch (roomType)
                 {
