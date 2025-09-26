@@ -455,30 +455,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79785e4447a685b4c98e626f269069e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _assets: {fileID: 11400000, guid: af35c7df6a2b5b1458d14d9e379c34ed, type: 2}
-  _parent: {fileID: 1497775666}
-  _boundingVolume:
-    Min:
-      x: -15
-      y: 0
-      z: -15
-    Max:
-      x: 15
-      y: 3
-      z: 15
-  _roomSize:
-    Min:
-      x: 5
+  _input:
+    assets: {fileID: 11400000, guid: af35c7df6a2b5b1458d14d9e379c34ed, type: 2}
+    boundingVolume:
+      Min:
+        x: -15
+        y: 0
+        z: -15
+      Max:
+        x: 15
+        y: 3
+        z: 15
+    roomSize:
+      Min:
+        x: 5
+        y: 1
+        z: 5
+      Max:
+        x: 7
+        y: 1
+        z: 7
+    connectionSize:
+      x: 3
       y: 1
-      z: 5
-    Max:
-      x: 7
-      y: 1
-      z: 7
-  _connectionSize:
-    x: 3
-    y: 1
-    z: 0.1
+      z: 0.1
   _seed: 0
 --- !u!4 &1497775666
 Transform:

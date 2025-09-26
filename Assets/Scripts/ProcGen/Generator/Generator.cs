@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
@@ -20,12 +21,13 @@ namespace ProcGen
 			return rooms.Value.parent.gameObject;
 		}
 
-		public readonly struct Input
+		[Serializable]
+		public struct Input
 		{
-			public readonly AssetsCollection assets;
-			public readonly MinMaxAABB boundingVolume;
-			public readonly MinMaxAABB roomSize;
-			public readonly float3 connectionSize;
+			public AssetsCollection assets;
+			public MinMaxAABB boundingVolume;
+			public MinMaxAABB roomSize;
+			public float3 connectionSize;
 
 			public Input(AssetsCollection assets, MinMaxAABB boundingVolume, MinMaxAABB roomSize, float3 connectionSize)
 			{
