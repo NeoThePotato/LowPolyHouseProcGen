@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using Unity.Mathematics.Geometry;
+﻿using Unity.Mathematics.Geometry;
 
 namespace ProcGen
 {
 	public static partial class Generator
 	{
-		public static void ShrinkRooms(in Input input, IEnumerable<RoomData> rooms)
+		public static void ShrinkRooms(in Input input, RoomData[] rooms)
 		{
 			var shrinkBy = input.connectionSize.z * .5f;
 			foreach (var room in rooms)

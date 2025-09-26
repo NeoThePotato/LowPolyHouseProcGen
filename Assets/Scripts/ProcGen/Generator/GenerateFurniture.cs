@@ -1,76 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using random = Unity.Mathematics.Random;
-using ProcGen.Collections;
 using Unity.Mathematics;
-using UnityEditor;
+using random = Unity.Mathematics.Random;
 
 namespace ProcGen
 {
 	public static partial class Generator
 	{
-        public static AssetsCollection assets = AssetDatabase.LoadAssetAtPath<AssetsCollection>("Assets/Config/LowPolyHouse.asset");
-
         /// <summary>
         /// Generate furniture for all <paramref name="rooms"/>.
         /// </summary>d
         /// <param name="input">Generation input.</param>
         /// <param name="random">Random number generator.</param>
         /// <param name="rooms">Rooms to furnish.</param>
-        public static void GenerateFurniture(in Input input, ref random random, IEnumerable<INode<RoomData>> rooms)
+        public static void GenerateFurniture(in Input input, ref random random, RoomData[] rooms)
 		{
 			foreach (var room in rooms)
-            {
-				switch (room.Value.roomType)
-                {
-					case RoomType.KeyRoom:
-                        PlaceGrammarFurniture(room.Value, RoomType.KeyRoom, ref random);
-						break;
-
-					case RoomType.LockedRoom:
-                        PlaceGrammarFurniture(room.Value, RoomType.LockedRoom, ref random);
-						break;
-
-                    case RoomType.Entrance:
-                        PlaceGrammarFurniture(room.Value, RoomType.Entrance, ref random);
-                        break;
-
-                    case RoomType.Exit:
-                        PlaceGrammarFurniture(room.Value, RoomType.Exit, ref random);
-                        break;
-
-                    case RoomType.EnemyRoom:
-                        PlaceGrammarFurniture(room.Value, RoomType.EnemyRoom, ref random);
-                        break;
-
-                    case RoomType.PuzzleRoom:
-                        PlaceGrammarFurniture(room.Value, RoomType.PuzzleRoom, ref random);
-                        break;
-
-                    case RoomType.TreasureRoom:
-                        PlaceGrammarFurniture(room.Value, RoomType.TreasureRoom, ref random);
-                        break;
-
-                    case RoomType.None:
-                        PlaceGrammarFurniture(room.Value, RoomType.None, ref random);
-                        break;
-
-					default:
-                        PlaceGrammarFurniture(room.Value, RoomType.None, ref random);
-						break;
-				}
-			}
-				
+                PlaceGrammarFurniture(in input, room, ref random);
 		}
 
-        public static void PlaceGrammarFurniture(in RoomData roomBounds, Enum roomType, ref random random)
+        public static void PlaceGrammarFurniture(in Input input, in RoomData room, ref random random)
         {
-            const int objectCount = 5;
+            var assets = input.assets;
+            var roomType = room.roomType;
+
+			const int objectCount = 5;
             const float minSafeDistance = 3f;
             const float cellDensityFactor = 0.2f; // Lower = more cells, higher = fewer cells
-            Vector3 min = roomBounds.boundingVolume.Min + (roomBounds.boundingVolume.Extents * 0.2f);
-            Vector3 max = roomBounds.boundingVolume.Max - (roomBounds.boundingVolume.Extents * 0.2f);
+            Vector3 min = room.boundingVolume.Min + (room.boundingVolume.Extents * 0.2f);
+            Vector3 max = room.boundingVolume.Max - (room.boundingVolume.Extents * 0.2f);
 
             // Increase grid resolution for more, smaller cells
             int gridX = Mathf.Max(2, Mathf.FloorToInt((max.x - min.x) / (minSafeDistance * cellDensityFactor)));
@@ -179,8 +137,8 @@ namespace ProcGen
                         break;
                 }
 
-                quaternion rotation = quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
-                GameObject.Instantiate(go, position, rotation, roomBounds.parent);
+                Quaternion rotation = Quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
+                GameObject.Instantiate(go, position, rotation, room.parent);
                 placedPositions.Add(position);
             }
         }

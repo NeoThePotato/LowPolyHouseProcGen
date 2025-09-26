@@ -4,23 +4,21 @@ using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
 using random = Unity.Mathematics.Random;
 using Extensions;
-using ProcGen.Collections;
 
 namespace ProcGen
 {
 	public static partial class Generator
 	{
-		public static void ConnectRooms(in Input input, ref random random, INode<RoomData> tree)
+		public static void ConnectRooms(in Input input, ref random random, RoomData[] rooms)
 		{
-			var allRooms = tree.Leaves().Select(n => n.Value).ToArray();
 			HashSet<RoomData> connectedRooms = new();
-			for (int i = 0; i < allRooms.Length; i++)
-				ConnectRoom(allRooms[i], ref random, input.connectionSize.xy);
+			for (int i = 0; i < rooms.Length; i++)
+				ConnectRoom(rooms[i], ref random, input.connectionSize.xy);
 
 			void ConnectRoom(RoomData room, ref random random, float2 connectionSize)
 			{
 				connectedRooms.Add(room);
-				var availableConnections = allRooms.Except(connectedRooms).Where(r => CanConnect(in room.boundingVolume, in r.boundingVolume, in connectionSize, out _)).ToArray();
+				var availableConnections = rooms.Except(connectedRooms).Where(r => CanConnect(in room.boundingVolume, in r.boundingVolume, in connectionSize, out _)).ToArray();
 				foreach (var toConnect in availableConnections)
 				{
 					Connect(room, toConnect);

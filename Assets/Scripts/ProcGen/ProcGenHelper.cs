@@ -16,7 +16,7 @@ namespace ProcGen
 		public void Generate()
 		{
 			RemoveOldGeneration();
-			var house = Generator.Generate(in _input, GetRandom(out var seed), out _rooms);
+			var house = Generator.Generate(in _input, GetRandom(out var seed), out _rooms, out _);
 			if (!house)
 				return;
 			house.transform.SetParent(transform);

@@ -10,15 +10,16 @@ namespace ProcGen
 {
 	public static partial class Generator
 	{
-		public static GameObject Generate(in Input input, random random, out INode<RoomData> rooms)
+		public static GameObject Generate(in Input input, random random, out INode<RoomData> tree, out RoomData[] rooms)
 		{
-			GenerateRooms(in input, ref random, out rooms);
+			GenerateRooms(in input, ref random, out tree);
+			rooms = tree.Leaves().Select(n => n.Value).ToArray();
 			ConnectRooms(in input, ref random, rooms);
-			ShrinkRooms(in input, rooms.Leaves().Select(n => n.Value));
-			CreateRoomMeshes(in input, ref random, rooms.Leaves().Select(n => n.Value));
-			var updatedRooms =  GenerateQuests(ref random, rooms);
-			GenerateFurniture(in input, ref random, updatedRooms.Leaves());
-			return rooms.Value.parent.gameObject;
+			ShrinkRooms(in input, rooms);
+			CreateRoomMeshes(rooms);
+			GenerateQuests(ref random, tree);
+			GenerateFurniture(in input, ref random, rooms);
+			return tree.Value.parent.gameObject;
 		}
 
 		[Serializable]
