@@ -1,46 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using random = Unity.Mathematics.Random;
-using ProcGen.Collections;
 using System.Linq;
-using static ProcGen.Generator;
 using Extensions;
-using System.Diagnostics;
+using static ProcGen.Generator;
+using ProcGen.Collections;
 
 namespace ProcGen
 {
 	public static partial class Generator
 	{
-        public static INode<RoomData> GenerateQuests(ref random random, INode<RoomData> rooms)
+        public static void GenerateQuests(ref random random, INode<RoomData> tree)
 		{
-            
-            return RoomTypeAssigner.AssignTypes(rooms, ref random);
-
+            RoomTypeAssigner.AssignTypes(tree, ref random);
         }
 	}
 
     public static class RoomTypeAssigner
     {
-        public static INode<RoomData> AssignTypes(this INode<RoomData> rooms, ref random random)
+        public static void AssignTypes(this INode<RoomData> tree, ref random random)
         {
-            
-                
-            var root = rooms;
-            var first = rooms.Leaves().First();
+            var first = tree.Leaves().First();
             first.Value.roomType = RoomType.Entrance;
-            var lastRoom = GetLastInTree(root);
+            var lastRoom = GetLastInTree(tree);
             lastRoom.Value.roomType = RoomType.Exit;
 
-            var lockedRoom = GetRandomRoomExcept(root, new List<INode<RoomData>> {lastRoom}, ref random);
+            var lockedRoom = GetRandomRoomExcept(tree, new List<INode<RoomData>> {lastRoom}, ref random);
             lockedRoom.Value.roomType = RoomType.LockedRoom;
-            var parents = GetAllParents(lockedRoom, root);
+            var parents = GetAllParents(lockedRoom, tree);
             var keyRoom = parents[random.NextInt(1, parents.Count-1)];
             UnityEngine.Debug.Assert(keyRoom.IsLeaf());
             keyRoom.Value.roomType = RoomType.KeyRoom;
 
-            RandomRoomAssignmentExcept(root, ref random);
-
-            return root;
+            RandomRoomAssignmentExcept(tree, ref random);
         }
 
         public static INode<RoomData> GetRandomRoomExcept(INode<RoomData> root, List<INode<RoomData>> excludedList, ref random random)

@@ -3,6 +3,7 @@ using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
 using random = Unity.Mathematics.Random;
 using ProcGen.Collections;
+using EMath = Extensions.Math;
 
 namespace ProcGen
 {
@@ -21,7 +22,7 @@ namespace ProcGen
 
 			public static bool TrySplitSingle(in Input input, ref random random, INode<RoomData> toSplit)
 			{
-				const string LEFT = "left", RIGHT = "Right", DOWN = "Down", UP = "UP";
+				const string LEFT = "Left", RIGHT = "Right", DOWN = "Down", UP = "Up";
 
 				var roomToSplit = toSplit.Value;
 				ref readonly var boundingVolume = ref roomToSplit.boundingVolume;
@@ -62,6 +63,7 @@ namespace ProcGen
 			{
 				var child = new GameObject(name).transform;
 				child.SetParent(parent);
+				child.position = EMath.GetCenterRoot(bounds);
 				return new()
 				{
 					Value = new(bounds, child)
