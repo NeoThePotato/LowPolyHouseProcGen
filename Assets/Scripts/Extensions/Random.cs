@@ -10,17 +10,9 @@ namespace Extensions
 {
 	public static class Random
 	{
-		public static T GetRandom<Indexable, T>(this Indexable source) where Indexable : IIndexable<T> where T : unmanaged => source.ElementAt(UnityEngine.Random.Range(0, source.Length));
+		public static T GetRandom<Indexable, T>(this Indexable source, ref random random) where Indexable : IIndexable<T> where T : unmanaged => source.ElementAt(random.NextInt(source.Length));
 
-		public static T GetRandom<T>(this IReadOnlyList<T> source) => source[UnityEngine.Random.Range(0, source.Count)];
-
-		public static T GetRandom<T>(this IEnumerable<T> source) => source.ElementAt(UnityEngine.Random.Range(0, source.Count()));
-
-		public static T GetRandom<T>(this IEnumerable<T> source, ref random random) => source.ElementAt(random.NextInt(0, source.Count()));
-
-		public static T GetRandomOrDefault<T>(this IEnumerable<T> source) => source.ElementAtOrDefault(UnityEngine.Random.Range(0, source.Count()));
-
-		public static T GetRandomOrDefault<T>(this IEnumerable<T> source, ref random random) => source.ElementAtOrDefault(random.NextInt(0, source.Count()));
+		public static ref readonly T GetRandom<T>(this ReadOnlySpan<T> source, ref random random) => ref source[random.NextInt(source.Length)];
 
 		public static void Shuffle<T>(this IList<T> source, ref random random)
 		{
@@ -41,21 +33,6 @@ namespace Extensions
 		{
 			var rand = UnityEngine.Random.Range(0, numerator);
 			return rand >= denominator;
-		}
-
-		/// <summary>
-		/// Selects up to <paramref name="maxCount"/> unique random elements from <paramref name="source"/> and returns them to <paramref name="destination"/>.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="source">Source to select random elements from.</param>
-		/// <param name="destination">Destination to output selected elements to.</param>
-		/// <param name="maxCount">Maximum number of elements to select.</param>
-		public static void SelectRandom<T>(this IEnumerable<T> source, IList<T> destination, uint maxCount)
-		{
-			destination.Clear();
-			var getRandomQuery = source.Except(destination);
-			while (destination.Count < maxCount && getRandomQuery.Any())
-				destination.Add(getRandomQuery.GetRandom());
 		}
 
 		public static T GetWeightedRandom<T>(this IEnumerable<T> source, Func<T, int> getWeight)
