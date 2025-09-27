@@ -17,10 +17,10 @@ namespace ProcGen
 			ConnectRooms(in input, ref random, rooms, out connections);
 			ShrinkRooms(in input, rooms, connections);
 			CollapseConnections(in input, ref random, connections);
-			CreateRoomMeshes(rooms, connections);
+			CreateRoomMeshes(rooms);
 			GenerateDoors(in input, ref random, connections);
 			GenerateQuests(ref random, tree);
-			AssignRoomsMaterials(in input, ref random, rooms);
+			CreateRoomRenderers(in input, ref random, rooms);
 			GenerateFurniture(in input, ref random, rooms);
 			return tree.Value.transform.gameObject;
 		}
