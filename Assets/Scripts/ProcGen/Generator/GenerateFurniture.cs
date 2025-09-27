@@ -99,13 +99,19 @@ namespace ProcGen
                 );
 
                 var go = GetRandomFurniture(assets, ref random, roomType, objIdx);
-                if (room.roomType == RoomType.LockedRoom)
-                {
-                    go.transform.position = connections[0].transform.position;
-                    go.transform.rotation = connections[0].transform.rotation;
-                    go.transform.localScale = new Vector3(1f, 1f, 1f);
-                }
                 var rotation = quaternion.Euler(0f, random.NextFloat(360f), 0f);
+                if (room.roomType == RoomType.LockedRoom && objIdx == 0)
+                {
+                    ref var connection = ref connections[room.connections[0]];
+                    position = connection.transform.position;
+                    rotation = connection.transform.rotation;
+                    go.transform.localScale = new Vector3(1f, 1f, 1f);
+                    if (Application.isPlaying)
+                        GameObject.Destroy(connection.transform.gameObject);
+                    else
+                        GameObject.DestroyImmediate(connection.transform.gameObject);
+                    connection.transform = go.transform;
+                }
                 go = GameObject.Instantiate(go, position, rotation, room.transform);
                 go.tag = FURNITURE_TAG;
             }
