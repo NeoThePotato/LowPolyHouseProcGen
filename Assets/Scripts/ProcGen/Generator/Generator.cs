@@ -21,7 +21,7 @@ namespace ProcGen
 			GenerateDoors(in input, ref random, connections);
 			GenerateQuests(ref random, tree);
 			AssignRoomsMaterials(in input, ref random, rooms);
-			GenerateFurniture(in input, ref random, rooms);
+			GenerateFurniture(in input, ref random, rooms, connections);
 			return tree.Value.transform.gameObject;
 		}
 
