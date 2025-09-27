@@ -98,6 +98,10 @@ namespace ProcGen
                 );
 
                 var go = GetRandomFurniture(assets, ref random, roomType, objIdx);
+                if (room.roomType == RoomType.LockedRoom)
+                {
+                    go.transform.localScale = new Vector3(1f, 1f, 1f);
+                }
                 var rotation = quaternion.Euler(0f, random.NextFloat(360f), 0f);
                 go = GameObject.Instantiate(go, position, rotation, room.transform);
                 go.tag = FURNITURE_TAG;
