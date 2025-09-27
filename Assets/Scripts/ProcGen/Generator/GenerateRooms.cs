@@ -38,6 +38,8 @@ namespace ProcGen
 				public RoomData room1, room2;
 				public MinMaxAABB volume;
 
+				public readonly bool XAligned => volume.Min.z == volume.Max.z;
+
 				public readonly bool Equals(Connection other)
 				{
 					return
