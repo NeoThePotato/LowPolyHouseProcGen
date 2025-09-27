@@ -9,7 +9,10 @@ namespace ProcGen
 {
 	public static partial class Generator
 	{
-		const int FLOOR = 0, CEILING = 1, WALLS = 2, SUBMESH_COUNT = 3;
+		public static class SubMeshIndices
+		{
+			public const int FLOOR = 0, CEILING = 1, WALLS = 2, SUBMESH_COUNT = 3;
+		}
 
 		static readonly int[]
 			LEFT = { 0, 4, 5, 1 },
@@ -25,9 +28,9 @@ namespace ProcGen
 
 		private static MeshFilter CreateAndAssignMesh(RoomData room)
 		{
-			var meshFilter = room.parent.gameObject.AddComponent<MeshFilter>();
+			var meshFilter = room.transform.gameObject.AddComponent<MeshFilter>();
 			var mesh = meshFilter.mesh = CreateMesh(room);
-			var renderer = room.parent.gameObject.AddComponent<MeshRenderer>(); // TODO Move this to another generator step (I.E Assign Materials)
+			var renderer = room.transform.gameObject.AddComponent<MeshRenderer>(); // TODO Move this to another generator step (I.E Assign Materials)
 			renderer.materials = new Material[mesh.subMeshCount];
 			return meshFilter;
 		}
@@ -43,12 +46,12 @@ namespace ProcGen
 			using NativeList<Vector3> vertices = new(Allocator.Temp);
 			using NativeList<ushort> quads = new(Allocator.Temp);
 			using NativeList<Vector2> uv = new(Allocator.Temp);
-			using NativeArray<SubMeshDescriptor> subMeshes = new(SUBMESH_COUNT, Allocator.Temp);
+			using NativeArray<SubMeshDescriptor> subMeshes = new(SubMeshIndices.SUBMESH_COUNT, Allocator.Temp);
 
 			// Create Vertices & Quads
-			ref SubMeshDescriptor floor = ref subMeshes.AsSpan()[FLOOR];
-			ref SubMeshDescriptor ceiling = ref subMeshes.AsSpan()[CEILING];
-			ref SubMeshDescriptor walls = ref subMeshes.AsSpan()[WALLS];
+			ref SubMeshDescriptor floor = ref subMeshes.AsSpan()[SubMeshIndices.FLOOR];
+			ref SubMeshDescriptor ceiling = ref subMeshes.AsSpan()[SubMeshIndices.CEILING];
+			ref SubMeshDescriptor walls = ref subMeshes.AsSpan()[SubMeshIndices.WALLS];
 			floor = CreateFloor(in volume, vertices, quads);
 			ceiling = CreateCeiling(in volume, vertices, quads);
 			walls = CreateWalls(vertices, quads);

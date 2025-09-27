@@ -4,16 +4,19 @@ using Unity.Mathematics;
 using Unity.Mathematics.Geometry;
 using random = Unity.Mathematics.Random;
 using Extensions;
+using static ProcGen.Generator.RoomData;
 
 namespace ProcGen
 {
 	public static partial class Generator
 	{
-		public static void ConnectRooms(in Input input, ref random random, RoomData[] rooms)
+		public static void ConnectRooms(in Input input, ref random random, RoomData[] rooms, out Connection[] connections)
 		{
 			HashSet<RoomData> connectedRooms = new();
+			List<Connection> connectionsList = new();
 			for (int i = 0; i < rooms.Length; i++)
 				ConnectRoom(rooms[i], ref random, input.connectionSize.xy);
+			connections = connectionsList.ToArray();
 
 			void ConnectRoom(RoomData room, ref random random, float2 connectionSize)
 			{
@@ -21,7 +24,7 @@ namespace ProcGen
 				var availableConnections = rooms.Except(connectedRooms).Where(r => CanConnect(in room.boundingVolume, in r.boundingVolume, in connectionSize, out _)).ToArray();
 				foreach (var toConnect in availableConnections)
 				{
-					Connect(room, toConnect);
+					Connect(room, toConnect, connectionsList);
 					connectedRooms.Add(toConnect);
 				}
 			}
@@ -47,12 +50,14 @@ namespace ProcGen
 			return true;
 		}
 
-		public static void Connect(RoomData room1, RoomData room2)
+		public static void Connect(RoomData room1, RoomData room2, List<Connection> connections)
 		{
 			RoomData.Connection connection = new() { room1 = room1, room2 = room2 };
 			HasSharedBorder(room1.boundingVolume, room2.boundingVolume, out connection.volume);
-			room1.connections.Add(connection);
-			room2.connections.Add(connection);
+			connections.Add(connection);
+			var connectionIndex = connections.Count - 1;
+			room1.connections.Add(connectionIndex);
+			room2.connections.Add(connectionIndex);
 		}
 	}
 }
