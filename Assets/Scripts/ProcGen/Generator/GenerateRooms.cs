@@ -19,7 +19,7 @@ namespace ProcGen
 		{
 			public MinMaxAABB boundingVolume;
 			public readonly Transform transform;
-			public HashSet<Connection> connections;
+			public List<int> connections;
 			public RoomType roomType = RoomType.None;
 
 			public RoomData(in MinMaxAABB boundingVolume, Transform transform)

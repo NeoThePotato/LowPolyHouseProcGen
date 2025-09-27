@@ -10,12 +10,13 @@ namespace ProcGen
 {
 	public static partial class Generator
 	{
-		public static GameObject Generate(in Input input, random random, out INode<RoomData> tree, out RoomData[] rooms)
+		public static GameObject Generate(in Input input, random random, out INode<RoomData> tree, out RoomData[] rooms, out RoomData.Connection[] connections)
 		{
 			GenerateRooms(in input, ref random, out tree);
 			rooms = tree.Leaves().Select(n => n.Value).ToArray();
-			ConnectRooms(in input, ref random, rooms);
+			ConnectRooms(in input, ref random, rooms, out connections);
 			ShrinkRooms(in input, rooms);
+			CollapseConnections(in input, ref random, connections.AsSpan());
 			CreateRoomMeshes(rooms);
 			GenerateQuests(ref random, tree);
 			AssignRoomsMaterials(in input, ref random, rooms);
