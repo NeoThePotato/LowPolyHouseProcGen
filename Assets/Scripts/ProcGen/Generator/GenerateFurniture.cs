@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using random = Unity.Mathematics.Random;
 using static Extensions.Random;
 using Unity.Collections;
+using static ProcGen.Generator.RoomData;
 
 namespace ProcGen
 {
@@ -15,13 +16,13 @@ namespace ProcGen
         /// <param name="input">Generation input.</param>
         /// <param name="random">Random number generator.</param>
         /// <param name="rooms">Rooms to furnish.</param>
-        public static void GenerateFurniture(in Input input, ref random random, RoomData[] rooms)
+        public static void GenerateFurniture(in Input input, ref random random, RoomData[] rooms, Span<Connection> connections)
 		{
 			foreach (var room in rooms)
-                PlaceGrammarFurniture(in input, room, ref random);
+                PlaceGrammarFurniture(in input, room, ref random, connections);
 		}
 
-        public static void PlaceGrammarFurniture(in Input input, in RoomData room, ref random random)
+        public static void PlaceGrammarFurniture(in Input input, in RoomData room, ref random random, Span<Connection> connections)
         {
             const string FURNITURE_TAG = "Furniture";
 
@@ -98,6 +99,12 @@ namespace ProcGen
                 );
 
                 var go = GetRandomFurniture(assets, ref random, roomType, objIdx);
+                if (room.roomType == RoomType.LockedRoom)
+                {
+                    go.transform.position = connections[0].transform.position;
+                    go.transform.rotation = connections[0].transform.rotation;
+                    go.transform.localScale = new Vector3(1f, 1f, 1f);
+                }
                 var rotation = quaternion.Euler(0f, random.NextFloat(360f), 0f);
                 go = GameObject.Instantiate(go, position, rotation, room.transform);
                 go.tag = FURNITURE_TAG;
