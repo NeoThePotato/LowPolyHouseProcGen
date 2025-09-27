@@ -12,17 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feb55d9026dd3514089792375fe646c1, type: 3}
   m_Name: LowPolyHouse
   m_EditorClassIdentifier: 
-  _walls:
-  - {fileID: 8654596571108301825, guid: f612cbe600da0ed448fd778250ee19d4, type: 3}
-  - {fileID: 1065961416473834911, guid: e85737234c3b9724997fd96a860eb192, type: 3}
-  - {fileID: 2533677556964132661, guid: fe74790a2ca8ca343bb40085df53a66e, type: 3}
-  - {fileID: 8636565113797785859, guid: d038b07c4b4f9f8438d60d6c9e3349a2, type: 3}
-  - {fileID: 785077622131020801, guid: ba3aa544b44b6184b9e9fe771d132856, type: 3}
-  - {fileID: 5171619042863816436, guid: 708b482f0c12e7c4aa09639cb7b32ae4, type: 3}
-  - {fileID: 6948212266053989975, guid: 1d985747acae5e042878b1ed133723d6, type: 3}
-  - {fileID: 8719160700011895618, guid: f6e654693ee81334a80a9568a73188ca, type: 3}
-  - {fileID: 5235576080907212300, guid: 5552b3a82c5467f49a7782723c820980, type: 3}
-  - {fileID: 8982136597913145611, guid: 76467ef407b77de45a653980e25de27d, type: 3}
   _doors:
   - {fileID: 2738680471407284282, guid: 89f459b391cefa54bb5645d5c7d6e809, type: 3}
   - {fileID: 5370913598809958589, guid: 30a2069b51e39584bb7271c9b9a4d4aa, type: 3}
@@ -125,6 +114,14 @@ MonoBehaviour:
   - {fileID: 2100000, guid: cf216e436eb1d01449dbe709181d8fe6, type: 2}
   - {fileID: 2100000, guid: db55900d584f33743b56232860ec0591, type: 2}
   - {fileID: 2100000, guid: 3620e28ff83d36944bdcbcff3381cb8f, type: 2}
+  - {fileID: 2100000, guid: 23a629821387f864c9da706758f137d5, type: 2}
+  - {fileID: 2100000, guid: 44bea124ba2baa84f83578b0f5435c57, type: 2}
+  - {fileID: 2100000, guid: 2213776ded88eae498600405dc5d166f, type: 2}
+  - {fileID: 2100000, guid: df4e6c100875c6e44b42bfad3e20dec9, type: 2}
+  - {fileID: 2100000, guid: d22b5c28832e18845bfaa715953164d4, type: 2}
+  - {fileID: 2100000, guid: 683a8985b34c0614089cbaff3eb67482, type: 2}
+  _ceilingMaterials:
+  - {fileID: 2100000, guid: 5c51d3af10f2106478afc4c0e729e9a8, type: 2}
   _furniture:
   - {fileID: 3456176778876041207, guid: 0751de48865cccc4da24462432a878fb, type: 3}
   - {fileID: 5265808667830677570, guid: a7fdb4f8226db1841b2e8de2b3dfdcc4, type: 3}
