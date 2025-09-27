@@ -12,6 +12,8 @@ namespace Extensions
 	{
 		public static T GetRandom<Indexable, T>(this Indexable source, ref random random) where Indexable : IIndexable<T> where T : unmanaged => source.ElementAt(random.NextInt(source.Length));
 
+		public static ref readonly T GetRandom<T>(this ReadOnlyMemory<T> source, ref random random) => ref source.Span.GetRandom(ref random);
+
 		public static ref readonly T GetRandom<T>(this ReadOnlySpan<T> source, ref random random) => ref source[random.NextInt(source.Length)];
 
 		public static void Shuffle<T>(this IList<T> source, ref random random)

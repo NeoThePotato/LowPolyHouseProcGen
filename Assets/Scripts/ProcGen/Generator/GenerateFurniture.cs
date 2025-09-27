@@ -100,7 +100,7 @@ namespace ProcGen
                 var collection = GetCollection(assets, roomType);
                 if (roomType == RoomType.KeyRoom || roomType == RoomType.LockedRoom)
                     collection = collection[1..];
-                var go = collection.Span.GetRandom(ref random);
+                var go = collection.GetRandom(ref random);
 
                 var rotation = quaternion.Euler(0f, random.NextFloat(360f), 0f);
                 go = GameObject.Instantiate(go, position, rotation, room.parent);
