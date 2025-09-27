@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 namespace ProcGen
@@ -7,11 +7,11 @@ namespace ProcGen
 	public class AssetsCollection : ScriptableObject
 	{
 		[Header("Walls")]
-		[SerializeField] private GameObject[] _walls;
 		[SerializeField] private GameObject[] _doors;
 		[SerializeField] private GameObject[] _windows;
 		[SerializeField] private Material[] _wallMaterials;
 		[SerializeField] private Material[] _floorMaterials;
+		[SerializeField] private Material[] _ceilingMaterials;
 		[Header("Furniture")]
 		[SerializeField] private GameObject[] _furniture;
 
@@ -30,19 +30,18 @@ namespace ProcGen
         [Header("TreasureRoomObjects")]
         [SerializeField] private GameObject[] _treasureRoomObjects;
 
-
-        public IReadOnlyList<GameObject> Walls => _walls;
-		public IReadOnlyList<GameObject> Doors => _doors;
-		public IReadOnlyList<GameObject> Windows => _windows;
-		public IReadOnlyList<Material> WallMaterials => _wallMaterials;
-		public IReadOnlyList<Material> FloorMaterials => _floorMaterials;
-		public IReadOnlyList<GameObject> Furniture => _furniture;
-		public IReadOnlyList<GameObject> KeyRoomObjects => _keyRoomObjects;
-		public IReadOnlyList<GameObject> LockedRoomObjects => _lockedRoomObjects;
-        public IReadOnlyList<GameObject> EntranceRoomObjects => _entranceRoomObjects;
-        public IReadOnlyList<GameObject> ExitRoomObjects => _exitRoomObjects;
-        public IReadOnlyList<GameObject> EnemyRoomObjects => _enemyRoomObjects;
-        public IReadOnlyList<GameObject> PuzzleRoomObjects => _puzzleRoomObjects;
-        public IReadOnlyList<GameObject> TreasureRoomObjects => _treasureRoomObjects;
+		public ReadOnlyMemory<GameObject> Doors => _doors;
+		public ReadOnlyMemory<GameObject> Windows => _windows;
+		public ReadOnlyMemory<Material> WallMaterials => _wallMaterials;
+		public ReadOnlyMemory<Material> FloorMaterials => _floorMaterials;
+		public ReadOnlyMemory<Material> CeilingMaterials => _ceilingMaterials;
+		public ReadOnlyMemory<GameObject> Furniture => _furniture;
+		public ReadOnlyMemory<GameObject> KeyRoomObjects => _keyRoomObjects;
+		public ReadOnlyMemory<GameObject> LockedRoomObjects => _lockedRoomObjects;
+        public ReadOnlyMemory<GameObject> EntranceRoomObjects => _entranceRoomObjects;
+        public ReadOnlyMemory<GameObject> ExitRoomObjects => _exitRoomObjects;
+        public ReadOnlyMemory<GameObject> EnemyRoomObjects => _enemyRoomObjects;
+        public ReadOnlyMemory<GameObject> PuzzleRoomObjects => _puzzleRoomObjects;
+        public ReadOnlyMemory<GameObject> TreasureRoomObjects => _treasureRoomObjects;
     }
 }

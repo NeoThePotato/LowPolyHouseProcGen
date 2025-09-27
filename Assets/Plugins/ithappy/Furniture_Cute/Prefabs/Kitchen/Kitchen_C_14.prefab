@@ -188,6 +188,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kitchen_C_14
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6e17e71c6a873cc43b94fd7aaadee73a, type: 3}
+      propertyPath: m_TagString
+      value: Furniture
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

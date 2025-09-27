@@ -464,16 +464,16 @@ MonoBehaviour:
         z: -15
       Max:
         x: 15
-        y: 3
+        y: 10
         z: 15
     roomSize:
       Min:
         x: 5
-        y: 1
+        y: 3
         z: 5
       Max:
         x: 7
-        y: 1
+        y: 3
         z: 7
     connectionSize:
       x: 3

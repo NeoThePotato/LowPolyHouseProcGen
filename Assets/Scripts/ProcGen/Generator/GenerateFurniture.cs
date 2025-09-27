@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using Unity.Mathematics;
 using random = Unity.Mathematics.Random;
+using static Extensions.Random;
+using Unity.Collections;
 
 namespace ProcGen
 {
@@ -21,7 +23,9 @@ namespace ProcGen
 
         public static void PlaceGrammarFurniture(in Input input, in RoomData room, ref random random)
         {
-            var assets = input.assets;
+            const string FURNITURE_TAG = "Furniture";
+
+			var assets = input.assets;
             var roomType = room.roomType;
 
 			const int objectCount = 5;
@@ -31,21 +35,22 @@ namespace ProcGen
             Vector3 max = room.boundingVolume.Max - (room.boundingVolume.Extents * 0.2f);
 
             // Increase grid resolution for more, smaller cells
-            int gridX = Mathf.Max(2, Mathf.FloorToInt((max.x - min.x) / (minSafeDistance * cellDensityFactor)));
-            int gridZ = Mathf.Max(2, Mathf.FloorToInt((max.z - min.z) / (minSafeDistance * cellDensityFactor)));
+            int gridX = math.max(2, (int)math.floor((max.x - min.x) / (minSafeDistance * cellDensityFactor)));
+            int gridZ = math.max(2, (int)math.floor((max.z - min.z) / (minSafeDistance * cellDensityFactor)));
 
             bool[,] grid = new bool[gridX, gridZ];
-            List<Vector3> placedPositions = new List<Vector3>(objectCount);
 
             float cellWidth = (max.x - min.x) / gridX;
             float cellDepth = (max.z - min.z) / gridZ;
 
             bool relaxAdjacency = (gridX * gridZ < objectCount * 2);
 
+			using NativeList<FloorPosition> validCells = new(Allocator.Temp);
+
             for (int objIdx = 0; objIdx < objectCount; objIdx++)
             {
-                List<(int x, int z)> validCells = new List<(int, int)>();
-                for (int x = 0; x < gridX; x++)
+                validCells.Clear();
+				for (int x = 0; x < gridX; x++)
                 {
                     for (int z = 0; z < gridZ; z++)
                     {
@@ -72,7 +77,7 @@ namespace ProcGen
                     }
                 }
 
-                if (validCells.Count == 0 && relaxAdjacency)
+                if (validCells.Length == 0 && relaxAdjacency)
                 {
                     for (int x = 0; x < gridX; x++)
                         for (int z = 0; z < gridZ; z++)
@@ -80,67 +85,56 @@ namespace ProcGen
                                 validCells.Add((x, z));
                 }
 
-                if (validCells.Count == 0)
+                if (validCells.Length == 0)
                     break;
 
-                var cell = validCells[random.NextInt(0, validCells.Count)];
+                var cell = validCells.GetRandom<NativeList<FloorPosition>, FloorPosition>(ref random);
                 grid[cell.x, cell.z] = true;
 
-                Vector3 position = new Vector3(
+                Vector3 position = new(
                     min.x + (cell.x + 0.5f) * cellWidth,
-                    0f,
+					room.boundingVolume.Min.y,
                     min.z + (cell.z + 0.5f) * cellDepth
                 );
 
-                GameObject go = assets.Furniture[random.NextInt(0, assets.Furniture.Count)];
-                go.tag = "Furniture";
+                var collection = GetCollection(assets, roomType);
+                if (roomType == RoomType.KeyRoom || roomType == RoomType.LockedRoom)
+                    collection = collection[1..];
+                var go = collection.Span.GetRandom(ref random);
 
-                switch (roomType)
-                {
-                    case RoomType.Entrance:
-                        go = assets.EntranceRoomObjects[random.NextInt(0, assets.EntranceRoomObjects.Count)];
-                        break;
-                    case RoomType.Exit:
-                        go = assets.ExitRoomObjects[random.NextInt(0, assets.ExitRoomObjects.Count)];
-                        break;
-                    case RoomType.KeyRoom:
-                        if (objIdx == 0)
-                        {
-                            go = assets.KeyRoomObjects[0];
-                        }
-                        else
-                        {
-                            go = assets.KeyRoomObjects[random.NextInt(1, assets.KeyRoomObjects.Count)];
-                        }
-                        break;
-                    case RoomType.LockedRoom:
-                        if (objIdx == 0)
-                        {
-                            go = assets.LockedRoomObjects[0];
-                        }
-                        else
-                        {
-                            go = assets.LockedRoomObjects[random.NextInt(1, assets.LockedRoomObjects.Count)];
-                        }
-                        break;
-                    case RoomType.TreasureRoom:
-                        go = assets.TreasureRoomObjects[random.NextInt(0, assets.TreasureRoomObjects.Count)];
-                        break;
-                    case RoomType.EnemyRoom:
-                        go = assets.EnemyRoomObjects[random.NextInt(0, assets.EnemyRoomObjects.Count)];
-                        break;
-                    case RoomType.PuzzleRoom:
-                        go = assets.PuzzleRoomObjects[random.NextInt(0, assets.PuzzleRoomObjects.Count)];
-                        break;
-                    case RoomType.None:
-                        go = assets.Furniture[random.NextInt(0, assets.Furniture.Count)];
-                        break;
-                }
-
-                Quaternion rotation = Quaternion.Euler(random.NextFloat3(0, 360f) * math.up());
-                GameObject.Instantiate(go, position, rotation, room.parent);
-                placedPositions.Add(position);
+                var rotation = quaternion.Euler(0f, random.NextFloat(360f), 0f);
+                go = GameObject.Instantiate(go, position, rotation, room.parent);
+                go.tag = FURNITURE_TAG;
             }
+		}
+
+		static ReadOnlyMemory<GameObject> GetCollection(AssetsCollection collection, RoomType type)
+		{
+			return type switch
+			{
+				RoomType.Entrance => collection.EntranceRoomObjects,
+				RoomType.None => collection.Furniture,
+				RoomType.Exit => collection.ExitRoomObjects,
+				RoomType.KeyRoom => collection.KeyRoomObjects,
+				RoomType.LockedRoom => collection.LockedRoomObjects,
+				RoomType.TreasureRoom => collection.TreasureRoomObjects,
+				RoomType.EnemyRoom => collection.EnemyRoomObjects,
+				RoomType.PuzzleRoom => collection.PuzzleRoomObjects,
+				_ => collection.Furniture
+			};
+		}
+
+        private struct FloorPosition
+        {
+            public int x, z;
+
+            public FloorPosition(int x, int z)
+            {
+                this.x = x;
+                this.z = z;
+            }
+
+            public static implicit operator FloorPosition((int x, int z) tuple) => new(tuple.x, tuple.z);
         }
-    }
+	}
 }

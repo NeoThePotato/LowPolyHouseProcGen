@@ -28,6 +28,12 @@ namespace ProcGen
 			DrawBoundingVolume();
 			if (_rooms == null)
 				return;
+			if (!_rooms.Value.parent)
+			{
+				_rooms = null;
+				return;
+			}
+			RemoveDestroyedNodes(_rooms);
 			DrawRooms();
 			DrawConnections();
 
@@ -50,6 +56,24 @@ namespace ProcGen
 				var connections = _rooms.Leaves().SelectMany(n => n.Value.connections).Distinct();
 				foreach (var connection in connections)
 					Handles.DrawLine(connection.room1.boundingVolume.Center, connection.room2.boundingVolume.Center);
+			}
+
+			void RemoveDestroyedNodes(INode<Generator.RoomData> parent)
+			{
+				if (parent.Left != null)
+				{
+					if (!parent.Left.Value.parent)
+						parent.Left = null;
+					else
+						RemoveDestroyedNodes(parent.Left);
+				}
+				if (parent.Right != null)
+				{
+					if (!parent.Right.Value.parent)
+						parent.Right = null;
+					else
+						RemoveDestroyedNodes(parent.Right);
+				}
 			}
 		}
 
