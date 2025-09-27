@@ -15,10 +15,18 @@ namespace ProcGen
 
 		private static void ShrinkConnection(float3 connectionSize, ref Connection connection, ref random random)
 		{
-			if (!connection.XAligned)
-				(connectionSize.x, connectionSize.z) = (connectionSize.z, connectionSize.x);
-			var newMin = random.NextFloat3(connection.volume.Min, connection.volume.Max - connectionSize);
-			newMin.y = connection.volume.Min.y;
+			var newMin = connection.volume.Min;
+			if (connection.XAligned)
+			{
+				newMin.x = random.NextFloat(connection.volume.Min.x, connection.volume.Max.x - connectionSize.x);
+				connectionSize.z = 0f;
+			}
+			else
+			{
+				connectionSize.z = connectionSize.x;
+				newMin.z = random.NextFloat(connection.volume.Min.z, connection.volume.Max.z - connectionSize.z);
+				connectionSize.x = 0f;
+			}
 			connection.volume = new(newMin, newMin + connectionSize);
 		}
 	}

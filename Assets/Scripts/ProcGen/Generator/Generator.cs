@@ -16,8 +16,9 @@ namespace ProcGen
 			rooms = tree.Leaves().Select(n => n.Value).ToArray();
 			ConnectRooms(in input, ref random, rooms, out connections);
 			ShrinkRooms(in input, rooms);
-			CollapseConnections(in input, ref random, connections.AsSpan());
+			CollapseConnections(in input, ref random, connections);
 			CreateRoomMeshes(rooms);
+			GenerateDoors(in input, ref random, connections);
 			GenerateQuests(ref random, tree);
 			AssignRoomsMaterials(in input, ref random, rooms);
 			GenerateFurniture(in input, ref random, rooms);
