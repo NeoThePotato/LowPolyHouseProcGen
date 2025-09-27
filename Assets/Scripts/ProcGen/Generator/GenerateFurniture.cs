@@ -103,7 +103,7 @@ namespace ProcGen
                 var go = collection.GetRandom(ref random);
 
                 var rotation = quaternion.Euler(0f, random.NextFloat(360f), 0f);
-                go = GameObject.Instantiate(go, position, rotation, room.parent);
+                go = GameObject.Instantiate(go, position, rotation, room.transform);
                 go.tag = FURNITURE_TAG;
             }
 		}

@@ -14,7 +14,7 @@ namespace ProcGen
 			var materials = array[..SubMeshIndices.SUBMESH_COUNT];
 			foreach (var room in rooms)
 			{
-				if (room.parent.TryGetComponent<MeshRenderer>(out var renderer))
+				if (room.transform.TryGetComponent<MeshRenderer>(out var renderer))
 					AssignRendererMaterials(input, ref random, renderer, materials);
 			}
 			ArrayPool<Material>.Shared.Return(array);

@@ -20,7 +20,7 @@ namespace ProcGen
 			GenerateQuests(ref random, tree);
 			AssignRoomsMaterials(in input, ref random, rooms);
 			GenerateFurniture(in input, ref random, rooms);
-			return tree.Value.parent.gameObject;
+			return tree.Value.transform.gameObject;
 		}
 
 		[Serializable]

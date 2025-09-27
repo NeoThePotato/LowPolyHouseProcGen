@@ -28,7 +28,7 @@ namespace ProcGen
 			DrawBoundingVolume();
 			if (_rooms == null)
 				return;
-			if (!_rooms.Value.parent)
+			if (!_rooms.Value.transform)
 			{
 				_rooms = null;
 				return;
@@ -62,14 +62,14 @@ namespace ProcGen
 			{
 				if (parent.Left != null)
 				{
-					if (!parent.Left.Value.parent)
+					if (!parent.Left.Value.transform)
 						parent.Left = null;
 					else
 						RemoveDestroyedNodes(parent.Left);
 				}
 				if (parent.Right != null)
 				{
-					if (!parent.Right.Value.parent)
+					if (!parent.Right.Value.transform)
 						parent.Right = null;
 					else
 						RemoveDestroyedNodes(parent.Right);
@@ -87,9 +87,9 @@ namespace ProcGen
         [ContextMenu("RemoveOldGen")]
         private void RemoveOldGeneration()
 		{
-			if (_rooms == null || !_rooms.Value.parent)
+			if (_rooms == null || !_rooms.Value.transform)
 				return;
-			DestroyImmediate(_rooms.Value.parent.gameObject);
+			DestroyImmediate(_rooms.Value.transform.gameObject);
 			_rooms = null;
 		}
 	}

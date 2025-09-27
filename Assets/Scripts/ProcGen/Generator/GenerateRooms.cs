@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics.Geometry;
 using random = Unity.Mathematics.Random;
 using ProcGen.Collections;
-using System;
 
 namespace ProcGen
 {
@@ -18,20 +18,20 @@ namespace ProcGen
 		public class RoomData
 		{
 			public MinMaxAABB boundingVolume;
-			public readonly Transform parent;
+			public readonly Transform transform;
 			public HashSet<Connection> connections;
 			public RoomType roomType = RoomType.None;
 
-			public RoomData(in MinMaxAABB boundingVolume, Transform parent)
+			public RoomData(in MinMaxAABB boundingVolume, Transform transform)
 			{
 				this.boundingVolume = boundingVolume;
-				this.parent = parent;
+				this.transform = transform;
 				connections = new();
 			}
 
 			public static implicit operator MinMaxAABB(in RoomData roomData) => roomData.boundingVolume;
 
-			public static implicit operator Transform(in RoomData roomData) => roomData.parent;
+			public static implicit operator Transform(in RoomData roomData) => roomData.transform;
 
 			public struct Connection : IEquatable<Connection>
 			{

@@ -11,7 +11,7 @@ namespace ProcGen
 			foreach (var room in rooms)
 			{
 				ShrinkBounds(ref room.boundingVolume, shrinkBy);
-				RaiseTransformY(room.parent, shrinkBy);
+				RaiseTransformY(room.transform, shrinkBy);
 			}
 		}
 
