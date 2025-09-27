@@ -17,7 +17,7 @@ namespace ProcGen
 			ConnectRooms(in input, ref random, rooms, out connections);
 			ShrinkRooms(in input, rooms, connections);
 			CollapseConnections(in input, ref random, connections);
-			CreateRoomMeshes(rooms);
+			CreateRoomMeshes(rooms, connections);
 			GenerateDoors(in input, ref random, connections);
 			GenerateQuests(ref random, tree);
 			AssignRoomsMaterials(in input, ref random, rooms);

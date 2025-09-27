@@ -30,8 +30,6 @@ namespace ProcGen
 		{
 			var meshFilter = room.transform.gameObject.AddComponent<MeshFilter>();
 			var mesh = meshFilter.mesh = CreateMesh(room);
-			var renderer = room.transform.gameObject.AddComponent<MeshRenderer>(); // TODO Move this to another generator step (I.E Assign Materials)
-			renderer.materials = new Material[mesh.subMeshCount];
 			return meshFilter;
 		}
 
