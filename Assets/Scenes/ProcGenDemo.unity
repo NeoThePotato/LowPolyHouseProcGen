@@ -478,8 +478,8 @@ MonoBehaviour:
     connectionSize:
       x: 1
       y: 2.1
-      z: 0.3
-  _seed: 1423565516
+      z: 0.09
+  _seed: 0
 --- !u!4 &1497775666
 Transform:
   m_ObjectHideFlags: 0
