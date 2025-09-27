@@ -15,12 +15,12 @@ namespace ProcGen
 			GenerateRooms(in input, ref random, out tree);
 			rooms = tree.Leaves().Select(n => n.Value).ToArray();
 			ConnectRooms(in input, ref random, rooms, out connections);
-			ShrinkRooms(in input, rooms);
+			ShrinkRooms(in input, rooms, connections);
 			CollapseConnections(in input, ref random, connections);
 			CreateRoomMeshes(rooms);
 			GenerateDoors(in input, ref random, connections);
 			GenerateQuests(ref random, tree);
-			AssignRoomsMaterials(in input, ref random, rooms);
+			CreateRoomRenderers(in input, ref random, rooms);
 			GenerateFurniture(in input, ref random, rooms, connections);
 			return tree.Value.transform.gameObject;
 		}

@@ -8,14 +8,14 @@ namespace ProcGen
 {
 	public static partial class Generator
 	{
-		private static void AssignRoomsMaterials(in Input input, ref random random, RoomData[] rooms)
+		private static void CreateRoomRenderers(in Input input, ref random random, RoomData[] rooms)
 		{
 			var array = ArrayPool<Material>.Shared.Rent(SubMeshIndices.SUBMESH_COUNT);
 			var materials = array[..SubMeshIndices.SUBMESH_COUNT];
 			foreach (var room in rooms)
 			{
-				if (room.transform.TryGetComponent<MeshRenderer>(out var renderer))
-					AssignRendererMaterials(input, ref random, renderer, materials);
+				var renderer = room.transform.gameObject.AddComponent<MeshRenderer>();
+				AssignRendererMaterials(input, ref random, renderer, materials);
 			}
 			ArrayPool<Material>.Shared.Return(array);
 		}

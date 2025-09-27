@@ -30,14 +30,13 @@ namespace ProcGen
 		{
 			var meshFilter = room.transform.gameObject.AddComponent<MeshFilter>();
 			var mesh = meshFilter.mesh = CreateMesh(room);
-			var renderer = room.transform.gameObject.AddComponent<MeshRenderer>(); // TODO Move this to another generator step (I.E Assign Materials)
-			renderer.materials = new Material[mesh.subMeshCount];
 			return meshFilter;
 		}
 
 		private static Mesh CreateMesh(RoomData room)
 		{
 			const int UV_CHANNEL = 0;
+			const MeshTopology TOPOLOGY = MeshTopology.Quads;
 			const MeshUpdateFlags DONT_UPDATE = MeshUpdateFlags.DontValidateIndices | MeshUpdateFlags.DontResetBoneBounds | MeshUpdateFlags.DontNotifyMeshUsers | MeshUpdateFlags.DontRecalculateBounds;
 
 			var volume = room.boundingVolume;
@@ -71,64 +70,64 @@ namespace ProcGen
 			mesh.RecalculateNormals();
 			mesh.RecalculateTangents();
 			return mesh;
-		}
 
-		private static SubMeshDescriptor CreateFloor(in MinMaxAABB bounds, NativeList<Vector3> vertices, NativeList<ushort> quads)
-		{
-			SubMeshDescriptor floor = new(indexStart: vertices.Length, indexCount: 4, topology: MeshTopology.Quads);
-			float
-				y = bounds.Min.y,
-				left = bounds.Min.x,
-				right = bounds.Max.x,
-				bottom = bounds.Min.z,
-				top = bounds.Max.z;
-			vertices.Add(new(left, y, bottom));
-			vertices.Add(new(left, y, top));
-			vertices.Add(new(right, y, top));
-			vertices.Add(new(right, y, bottom));
-			quads.Add((ushort)floor.indexStart);
-			quads.Add((ushort)(floor.indexStart + 1));
-			quads.Add((ushort)(floor.indexStart + 2));
-			quads.Add((ushort)(floor.indexStart + 3));
-			return floor;
-		}
-
-		private static SubMeshDescriptor CreateCeiling(in MinMaxAABB bounds, NativeList<Vector3> vertices, NativeList<ushort> quads)
-		{
-			SubMeshDescriptor ceiling = new(indexStart: vertices.Length, indexCount: 4, topology: MeshTopology.Quads);
-			float
-				y = bounds.Max.y,
-				left = bounds.Min.x,
-				right = bounds.Max.x,
-				bottom = bounds.Min.z,
-				top = bounds.Max.z;
-			vertices.Add(new(left, y, bottom));
-			vertices.Add(new(left, y, top));
-			vertices.Add(new(right, y, top));
-			vertices.Add(new(right, y, bottom));
-			quads.Add((ushort)ceiling.indexStart);
-			quads.Add((ushort)(ceiling.indexStart + 3));
-			quads.Add((ushort)(ceiling.indexStart + 2));
-			quads.Add((ushort)(ceiling.indexStart + 1));
-			return ceiling;
-		}
-
-		private static SubMeshDescriptor CreateWalls(NativeList<Vector3> vertices, NativeList<ushort> quads)
-		{
-			var left = Wall(vertices, quads, LEFT);
-			var up = Wall(vertices, quads, UP);
-			var right = Wall(vertices, quads, RIGHT);
-			var down = Wall(vertices, quads, DOWN);
-			return Combine(left, up, right, down);
-
-			static SubMeshDescriptor Wall(NativeList<Vector3> vertices, NativeList<ushort> quads, int[] copy)
+			static SubMeshDescriptor CreateFloor(in MinMaxAABB bounds, NativeList<Vector3> vertices, NativeList<ushort> quads)
 			{
-				SubMeshDescriptor wall = new(indexStart: vertices.Length, indexCount: copy.Length, topology: MeshTopology.Quads);
-				for (int i = 0; i < copy.Length; i++)
-					vertices.Add(vertices[copy[i]]);
-				for (int i = 0; i < wall.indexCount; i++)
-					quads.Add((ushort)(wall.indexStart + i));
-				return wall;
+				SubMeshDescriptor floor = new(indexStart: vertices.Length, indexCount: 4, topology: TOPOLOGY);
+				float
+					y = bounds.Min.y,
+					left = bounds.Min.x,
+					right = bounds.Max.x,
+					bottom = bounds.Min.z,
+					top = bounds.Max.z;
+				vertices.Add(new(left, y, bottom));
+				vertices.Add(new(left, y, top));
+				vertices.Add(new(right, y, top));
+				vertices.Add(new(right, y, bottom));
+				quads.Add((ushort)floor.indexStart);
+				quads.Add((ushort)(floor.indexStart + 1));
+				quads.Add((ushort)(floor.indexStart + 2));
+				quads.Add((ushort)(floor.indexStart + 3));
+				return floor;
+			}
+
+			static SubMeshDescriptor CreateCeiling(in MinMaxAABB bounds, NativeList<Vector3> vertices, NativeList<ushort> quads)
+			{
+				SubMeshDescriptor ceiling = new(indexStart: vertices.Length, indexCount: 4, topology: TOPOLOGY);
+				float
+					y = bounds.Max.y,
+					left = bounds.Min.x,
+					right = bounds.Max.x,
+					bottom = bounds.Min.z,
+					top = bounds.Max.z;
+				vertices.Add(new(left, y, bottom));
+				vertices.Add(new(left, y, top));
+				vertices.Add(new(right, y, top));
+				vertices.Add(new(right, y, bottom));
+				quads.Add((ushort)ceiling.indexStart);
+				quads.Add((ushort)(ceiling.indexStart + 3));
+				quads.Add((ushort)(ceiling.indexStart + 2));
+				quads.Add((ushort)(ceiling.indexStart + 1));
+				return ceiling;
+			}
+
+			static SubMeshDescriptor CreateWalls(NativeList<Vector3> vertices, NativeList<ushort> quads)
+			{
+				var left = Wall(vertices, quads, LEFT);
+				var up = Wall(vertices, quads, UP);
+				var right = Wall(vertices, quads, RIGHT);
+				var down = Wall(vertices, quads, DOWN);
+				return Combine(left, up, right, down);
+
+				static SubMeshDescriptor Wall(NativeList<Vector3> vertices, NativeList<ushort> quads, int[] copy)
+				{
+					SubMeshDescriptor wall = new(indexStart: vertices.Length, indexCount: copy.Length, topology: TOPOLOGY);
+					for (int i = 0; i < copy.Length; i++)
+						vertices.Add(vertices[copy[i]]);
+					for (int i = 0; i < wall.indexCount; i++)
+						quads.Add((ushort)(wall.indexStart + i));
+					return wall;
+				}
 			}
 		}
 
