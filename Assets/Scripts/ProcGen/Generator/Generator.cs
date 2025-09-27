@@ -18,6 +18,7 @@ namespace ProcGen
 			ShrinkRooms(in input, rooms);
 			CreateRoomMeshes(rooms);
 			GenerateQuests(ref random, tree);
+			AssignRoomsMaterials(in input, ref random, rooms);
 			GenerateFurniture(in input, ref random, rooms);
 			return tree.Value.parent.gameObject;
 		}
