@@ -97,15 +97,21 @@ namespace ProcGen
                     min.z + (cell.z + 0.5f) * cellDepth
                 );
 
-                var collection = GetCollection(assets, roomType);
-                if (roomType == RoomType.KeyRoom || roomType == RoomType.LockedRoom)
-                    collection = collection[1..];
-                var go = collection.GetRandom(ref random);
-
+                var go = GetRandomFurniture(assets, ref random, roomType, objIdx);
                 var rotation = quaternion.Euler(0f, random.NextFloat(360f), 0f);
                 go = GameObject.Instantiate(go, position, rotation, room.transform);
                 go.tag = FURNITURE_TAG;
             }
+		}
+
+        static GameObject GetRandomFurniture(AssetsCollection assets, ref random random, RoomType roomType, int objectIndex)
+		{
+			var collection = GetCollection(assets, roomType);
+			if (roomType != RoomType.KeyRoom && roomType != RoomType.LockedRoom)
+				return collection.GetRandom(ref random);
+            if (objectIndex == 0)
+                return collection.Span[0];
+			return collection[1..].GetRandom(ref random);
 		}
 
 		static ReadOnlyMemory<GameObject> GetCollection(AssetsCollection collection, RoomType type)
